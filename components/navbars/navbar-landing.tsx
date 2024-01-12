@@ -9,9 +9,15 @@ import {
     navigationMenuTriggerStyle,
 } from "../ui/navigation-menu";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 const NavbarLanding = () => {
     const navbarItems = ["Home", "About", "Contact", "Blog"];
+    const pathname = usePathname();
+
+    if (pathname !== "/") {
+        return null;
+    }
 
     return (
         <div className="flex items-center pb-6 justify-center">
