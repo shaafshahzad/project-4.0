@@ -14,7 +14,6 @@ const Landing = () => {
 
     return (
         <div>
-            <NavbarLanding />
             <Button onClick={handleSignIn}>log in or sign up</Button>
         </div>
     );
