@@ -22,7 +22,7 @@ const NavbarMobile = () => {
             </SheetTrigger>
             <SheetContent
                 side={"left"}
-                className="h-full flex flex-col justify-between"
+                className="h-full flex flex-col justify-between bg-background dark:bg-background-dark"
             >
                 <NavbarContent />
                 <div className="flex flex-col justify-between items-start mb-5">
