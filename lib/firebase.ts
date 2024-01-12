@@ -20,7 +20,7 @@ export const db = getFirestore(app);
 
 const provider = new GoogleAuthProvider();
 
-const auth = getAuth();
+export const auth = getAuth();
 
 export const signInWithGoogle = () => {
     return new Promise<any>((resolve, reject) => {
