@@ -19,7 +19,7 @@ const NavbarMain = () => {
 
     return (
         <>
-            <NavigationMenu className="flex justify-between w-full max-w-full px-11 py-4 border-b gap-11">
+            <NavigationMenu className="flex flex-none justify-between w-full max-w-full px-11 py-4 border-b gap-11">
                 <h1 className="italic font-semibold text-3xl">p4.0</h1>
                 {isScreenBreakpoint ? (
                     <>

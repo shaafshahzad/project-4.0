@@ -31,7 +31,7 @@ export default function RootLayout({
         <html lang="en">
             <body
                 className={cn(
-                    "min-h-screen font-sans w-full",
+                    "font-sans flex flex-col h-screen",
                     fontSans.variable,
                     fontMono.variable
                 )}
