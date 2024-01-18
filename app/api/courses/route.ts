@@ -52,34 +52,39 @@ export async function POST(req: NextRequest) {
                 {
                     role: "system",
                     content: `
-                    Your task is to identify and format course information into a structured output. Analyze the provided text to extract two key pieces of data: the course code and the course name. Your output should be formatted in a specific way, following this structure:
+                    Your objective is to process and structure course-related information into a JSON format. Specifically, you need to extract from the provided text two essential elements: the course name and its grading scheme. Structure your output as a JSON object with the following keys:
 
-                    - Each entry must be presented in the format "course code - course name".
-                    - Ensure accuracy in identifying and separating the course code from the course name.
+                    courseName: The extracted name of the course.
+                    courseGrading: The extracted grading scheme of the course, formatted as "assignment name: weighting".
+                    Ensure that the data is accurately identified and formatted. The output should adhere to this JSON structure, representing the course details and grading breakdown.
                     
-                    For clarity, here are examples of the expected output format:
+                    For example, if the input text describes a course with its name and various assignments with their weightings, your output should look like this (example values provided for illustration):    
                     
-                    CSC108 - Introduction to Computer Programming
-                    CSC148 - Introduction to Computer Science
-                    CSC207 - Software Design
-                    COE328 - Digital Systems
-                    Note: The course code (e.g., CSC108) and the course name (e.g., Introduction to Computer Programming) should be accurately extracted and formatted as shown in the examples.
+                    {
+                        "courseName": "Introduction to Computer Programming",
+                        "courseGrading": {
+                          "Midterm Exam": "30%",
+                          "Final Exam": "40%",
+                          "Assignments": "30%"
+                        }
+                    }
+
+                    Note: Pay close attention to the input text to correctly identify and format the course name and each component of the grading scheme, including assignment names and their respective weightings.
                     `
                 },
                 { role: "user", content: parsedText },
             ],
             model: "gpt-4-1106-preview",
             max_tokens: 1000,
+            response_format: { type: "json_object" },
         });
 
-        extracted = completion.choices[0].message.content as string;
+        const extracted = completion.choices[0].message.content;
         console.log(extracted);
 
     } else {
         console.log('Uploaded file is not in the expected format.');
     }
 
-    const response = new NextResponse();
-    response.headers.set('Extracted', extracted);
-    return response;
+    return NextResponse.json({ fileName, parsedText, extracted });
 }
