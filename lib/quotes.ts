@@ -1,5 +1,9 @@
 const quotes = [
     {
+        quote: "The expert in anything was once a beginner.",
+        author: "Helen Hayes",
+    },
+    {
         quote: "It is not knowledge, but the act of learning, not possession but the act of getting there, which grants the greatest enjoyment",
         author: "Carl Friedrich Gauss",
     },
@@ -10,10 +14,6 @@ const quotes = [
     {
         quote: "Education is not the filling of a pail, but the lighting of a fire.",
         author: "W.B. Yeats",
-    },
-    {
-        quote: "The expert in anything was once a beginner.",
-        author: "Helen Hayes",
     },
     {
         quote: "Educating the mind without educating the heart is no education at all.",
