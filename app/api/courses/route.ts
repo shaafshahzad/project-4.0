@@ -3,6 +3,7 @@ import { promises as fs } from 'fs'; // To save the file temporarily
 import { v4 as uuidv4 } from 'uuid'; // To generate a unique filename
 import PDFParser from 'pdf2json'; // To parse the pdf
 import OpenAI from 'openai';
+import { db } from '@/lib/firebase';
 
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
@@ -52,13 +53,16 @@ export async function POST(req: NextRequest) {
                 {
                     role: "system",
                     content: `
-                    Your objective is to process and structure course-related information into a JSON format. Specifically, you need to extract from the provided text two essential elements: the course name and its grading scheme. Structure your output as a JSON object with the following keys:
+                    Your assignment involves extracting and organizing comprehensive course information into a structured JSON format. This process requires you to identify three critical elements from the provided text:
 
-                    courseName: The extracted name of the course.
-                    courseGrading: The extracted grading scheme of the course, formatted as "assignment name: weighting".
-                    Ensure that the data is accurately identified and formatted. The output should adhere to this JSON structure, representing the course details and grading breakdown.
-                    
-                    For example, if the input text describes a course with its name and various assignments with their weightings, your output should look like this (example values provided for illustration):    
+                    1. courseName: The name of the course.
+                    2. courseGrading: The course's grading scheme, detailing each component (e.g., assignments, exams) along with their respective weightings.
+                    3. weeklyTopics: The specific content covered in the course on a weekly basis, formatted as "week number: content".
+                    In cases where weekly topics are not clearly discernible or absent from the text, the output should explicitly state "No weekly topics found" under the weeklyTopics key.
+
+                    Your output should be a JSON object with these keys, accurately capturing the details of the course, its grading structure, and the weekly curriculum.
+
+                    For example, if the input text provides the course name, its grading components, and a list of weekly topics, your output should look like this (with hypothetical values for illustration):                
                     
                     {
                         "courseName": "Introduction to Computer Programming",
@@ -66,10 +70,28 @@ export async function POST(req: NextRequest) {
                           "Midterm Exam": "30%",
                           "Final Exam": "40%",
                           "Assignments": "30%"
+                        },
+                        "weeklyTopics": {
+                          "week1": "Basics of Programming",
+                          "week2": "Control Structures",
+                          "week3": "Data Structures",
+                          // ... continue for each week if available
                         }
                     }
+                     
+                    However, if weekly topics cannot be properly identified, the JSON should reflect that as follows:
 
-                    Note: Pay close attention to the input text to correctly identify and format the course name and each component of the grading scheme, including assignment names and their respective weightings.
+                    {
+                        "courseName": "Introduction to Computer Programming",
+                        "courseGrading": {
+                          "Midterm Exam": "30%",
+                          "Final Exam": "40%",
+                          "Assignments": "30%"
+                        },
+                        "weeklyTopics": "No weekly topics found"
+                    }
+                    
+                    Note: Pay careful attention to accurately parsing and formatting the course name, grading scheme, and weekly topics (if available). In cases where weekly topics are not identifiable, ensure to provide a clear indication in the JSON output.
                     `
                 },
                 { role: "user", content: parsedText },
@@ -80,11 +102,11 @@ export async function POST(req: NextRequest) {
         });
 
         const extracted = completion.choices[0].message.content;
-        console.log(extracted);
+        return NextResponse.json({ data: extracted, success: true });
 
     } else {
         console.log('Uploaded file is not in the expected format.');
     }
 
-    return NextResponse.json({ fileName, parsedText, extracted });
+    return NextResponse.json({ data: extracted, success: true });
 }
