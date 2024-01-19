@@ -57,7 +57,7 @@ const CourseList = () => {
 					{courses.map((course, index) => (
 						<CourseItem
 							key={index}
-							name={course.name}
+							course={course}
 							userId={user?.uid}
 						/>
 					))}

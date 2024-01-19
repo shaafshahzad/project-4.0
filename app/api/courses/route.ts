@@ -56,7 +56,7 @@ export async function POST(req: NextRequest) {
                     Your assignment involves extracting and organizing comprehensive course information into a structured JSON format. This process requires you to identify three critical elements from the provided text:
 
                     1. courseName: The name of the course. Should be formatted as 'course code: course title' (e.g., 'CPS109: Introduction to Computer Programming').
-                    2. courseGrading: The course's grading scheme, detailing each component (e.g., assignments, exams) along with their respective weightings.
+                    2. courseGrading: The course's grading scheme, detailing each component (e.g., assignments, exams) along with their respective weightings. The weightings should just be a number without the percentage sign.
                     3. weeklyTopics: The specific content covered in the course on a weekly basis, formatted as "week number: content".
                     In cases where weekly topics are not clearly discernible or absent from the text, the output should explicitly state "No weekly topics found" under the weeklyTopics key.
 
@@ -72,9 +72,9 @@ export async function POST(req: NextRequest) {
                           "Assignments": "30%"
                         },
                         "weeklyTopics": {
-                          "week1": "Basics of Programming",
-                          "week2": "Control Structures",
-                          "week3": "Data Structures",
+                          "Week 1": "Basics of Programming",
+                          "Week 2": "Control Structures",
+                          "Week 3": "Data Structures",
                           // ... continue for each week if available
                         }
                     }

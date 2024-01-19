@@ -15,15 +15,19 @@ import { TrashIcon } from "lucide-react";
 import React from "react";
 
 interface DeleteCourseProps {
-	name: string;
+	course: {
+		name: string;
+		grading: { [key: string]: string };
+		weeklyTopics: { [key: string]: string };
+	};
 	userId: string;
 }
 
-const DeleteCourse = ({ name, userId }: DeleteCourseProps) => {
+const DeleteCourse = ({ course, userId }: DeleteCourseProps) => {
 	const deleteConversation = async () => {
 		const userDocRef = doc(db, "courses", userId);
 		await updateDoc(userDocRef, {
-			[name]: deleteField(),
+			[course.name]: deleteField(),
 		});
 	};
 
@@ -39,11 +43,14 @@ const DeleteCourse = ({ name, userId }: DeleteCourseProps) => {
 					<AlertDialogTitle>Delete course</AlertDialogTitle>
 				</AlertDialogHeader>
 				<AlertDialogDescription>
-					Are you sure you want to delete {name}?
+					Are you sure you want to delete {course.name}?
 				</AlertDialogDescription>
 				<AlertDialogFooter>
 					<AlertDialogCancel>Cancel</AlertDialogCancel>
-					<AlertDialogAction onClick={() => deleteConversation()}>
+					<AlertDialogAction
+						onClick={() => deleteConversation()}
+						className="bg-destructive dark:text-white"
+					>
 						Delete
 					</AlertDialogAction>
 				</AlertDialogFooter>
