@@ -55,7 +55,7 @@ export async function POST(req: NextRequest) {
                     content: `
                     Your assignment involves extracting and organizing comprehensive course information into a structured JSON format. This process requires you to identify three critical elements from the provided text:
 
-                    1. courseName: The name of the course.
+                    1. courseName: The name of the course. Should be formatted as 'course code: course title' (e.g., 'CPS109: Introduction to Computer Programming').
                     2. courseGrading: The course's grading scheme, detailing each component (e.g., assignments, exams) along with their respective weightings.
                     3. weeklyTopics: The specific content covered in the course on a weekly basis, formatted as "week number: content".
                     In cases where weekly topics are not clearly discernible or absent from the text, the output should explicitly state "No weekly topics found" under the weeklyTopics key.
@@ -65,7 +65,7 @@ export async function POST(req: NextRequest) {
                     For example, if the input text provides the course name, its grading components, and a list of weekly topics, your output should look like this (with hypothetical values for illustration):                
                     
                     {
-                        "courseName": "Introduction to Computer Programming",
+                        "courseName": "CPS109: Introduction to Computer Programming",
                         "courseGrading": {
                           "Midterm Exam": "30%",
                           "Final Exam": "40%",
@@ -82,7 +82,7 @@ export async function POST(req: NextRequest) {
                     However, if weekly topics cannot be properly identified, the JSON should reflect that as follows:
 
                     {
-                        "courseName": "Introduction to Computer Programming",
+                        "courseName": "CPS109: Introduction to Computer Programming",
                         "courseGrading": {
                           "Midterm Exam": "30%",
                           "Final Exam": "40%",
@@ -91,7 +91,7 @@ export async function POST(req: NextRequest) {
                         "weeklyTopics": "No weekly topics found"
                     }
                     
-                    Note: Pay careful attention to accurately parsing and formatting the course name, grading scheme, and weekly topics (if available). In cases where weekly topics are not identifiable, ensure to provide a clear indication in the JSON output.
+                    Note: Pay careful attention to accurately parsing and formatting the course name, grading scheme, and weekly topics (if available).
                     `
                 },
                 { role: "user", content: parsedText },

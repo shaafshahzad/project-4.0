@@ -23,7 +23,7 @@ const CourseList = () => {
 	const [courses, setCourses] = useState<Course[]>([]);
 
 	useEffect(() => {
-		const fetchCourses = async () => {
+		const fetchCourses = () => {
 			if (user) {
 				const docRef = doc(db, "courses", user.uid);
 				const unsubscribe = onSnapshot(docRef, (docSnap) => {
@@ -36,11 +36,13 @@ const CourseList = () => {
 						setCourses(courses);
 					}
 				});
+
 				return unsubscribe;
 			}
 		};
 
-		fetchCourses();
+		const unsubscribe = fetchCourses();
+		return () => unsubscribe && unsubscribe();
 	}, [user]);
 
 	useEffect(() => {
