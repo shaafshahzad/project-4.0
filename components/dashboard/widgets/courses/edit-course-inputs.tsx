@@ -3,7 +3,7 @@ import { Input } from "@/components/ui/input";
 import React from "react";
 import { AlertDialogDescription } from "@/components/ui/alert-dialog";
 
-// TODO: Add functionality to edit course details
+// TODO: Add functionality to edit course details and update them in firestore
 
 interface EditCourseInputsProps {
 	course: {

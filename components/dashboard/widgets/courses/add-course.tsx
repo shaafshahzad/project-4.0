@@ -15,35 +15,27 @@ import { db } from "@/lib/firebase";
 import { doc, updateDoc, deleteField } from "firebase/firestore";
 import { SquarePen } from "lucide-react";
 import React from "react";
-import EditCourseInputs from "./edit-course-inputs";
+import AddCourseInputs from "./add-course-inputs";
+import { Button } from "@/components/ui/button";
 
-interface EditCourseProps {
-	course: {
-		name: string;
-		grading: { [key: string]: string };
-		weeklyTopics: { [key: string]: string };
-	};
-	userId: string;
-}
-
-const EditCourse = ({ course, userId }: EditCourseProps) => {
-	const editCourse = async () => {};
+const AddCourse = () => {
+	const AddCourse = async () => {};
 
 	return (
 		<AlertDialog>
 			<AlertDialogTrigger>
-				<div className="hover:bg-zinc-200 dark:hover:bg-zinc-500 rounded-md duration-200 cursor-pointer p-1">
-					<SquarePen size={18} />
-				</div>
+				<Button className="flex flex-row items-center">
+					Add Course
+				</Button>
 			</AlertDialogTrigger>
 			<AlertDialogContent>
 				<AlertDialogHeader>
-					<AlertDialogTitle>Edit Course</AlertDialogTitle>
+					<AlertDialogTitle>Add Course</AlertDialogTitle>
 				</AlertDialogHeader>
-				<EditCourseInputs course={course} />
+				<AddCourseInputs />
 				<AlertDialogFooter>
 					<AlertDialogCancel>Cancel</AlertDialogCancel>
-					<AlertDialogAction onClick={() => editCourse()}>
+					<AlertDialogAction onClick={() => AddCourse()}>
 						Save
 					</AlertDialogAction>
 				</AlertDialogFooter>
@@ -52,4 +44,4 @@ const EditCourse = ({ course, userId }: EditCourseProps) => {
 	);
 };
 
-export default EditCourse;
+export default AddCourse;

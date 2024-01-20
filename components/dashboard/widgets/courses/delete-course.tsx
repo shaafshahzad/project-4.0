@@ -40,7 +40,7 @@ const DeleteCourse = ({ course, userId }: DeleteCourseProps) => {
 			</AlertDialogTrigger>
 			<AlertDialogContent>
 				<AlertDialogHeader>
-					<AlertDialogTitle>Delete course</AlertDialogTitle>
+					<AlertDialogTitle>Delete Course</AlertDialogTitle>
 				</AlertDialogHeader>
 				<AlertDialogDescription>
 					Are you sure you want to delete {course.name}?
