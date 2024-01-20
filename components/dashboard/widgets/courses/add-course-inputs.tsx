@@ -81,7 +81,7 @@ const AddCourseInputs = () => {
 				</div>
 			</div>
 			<div>
-				<Label>Weekly Topics (leave nothing for 'none')</Label>
+				<Label>Weekly Topics (leave nothing for none)</Label>
 				<div className="space-y-2">
 					{weeklyTopics.map(({ id, week, topic }, index) => (
 						<div key={id} className="flex flex-col">
