@@ -109,6 +109,10 @@ const CourseGrades = ({ course, userId }: CourseGradesProps) => {
 		  )
 		: [];
 
+	const passOrFail = (grade: number) => {
+		return grade > 49.5;
+	};
+
 	return (
 		<Card className="border flex flex-col items-center p-2">
 			<CardHeader className="flex items-center py-2">
@@ -158,19 +162,27 @@ const CourseGrades = ({ course, userId }: CourseGradesProps) => {
 				<div className="w-full flex justify-between">
 					<Label className="text-xs">Current Grade</Label>
 					<Input
-						disabled
 						value={currentGrade}
+						readOnly
 						placeholder="100"
-						className="w-1/2 h-1/2 text-xs text-center truncate"
+						className={`w-1/2 h-1/2 text-xs text-center truncate pointer-events-none ${
+							passOrFail(currentGrade)
+								? "text-green-50 bg-green-600"
+								: "text-red-50 bg-red-600"
+						}`}
 					/>
 				</div>
 				<div className="w-full flex justify-between">
 					<Label className="text-xs">Total Grade</Label>
 					<Input
-						disabled
 						value={totalGrade}
+						readOnly
 						placeholder="100"
-						className="w-1/2 h-1/2 text-xs text-center truncate"
+						className={`w-1/2 h-1/2 text-xs text-center truncate pointer-events-none ${
+							passOrFail(totalGrade)
+								? "text-green-50 bg-green-600"
+								: "text-red-50 bg-red-600"
+						}`}
 					/>
 				</div>
 			</CardFooter>
