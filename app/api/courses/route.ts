@@ -56,7 +56,7 @@ export async function POST(req: NextRequest) {
                     Your assignment involves extracting and organizing comprehensive course information into a structured JSON format. This process requires you to identify three critical elements from the provided text:
 
                     1. courseName: The name of the course. Should be formatted as 'course code: course title' (e.g., 'CPS109: Introduction to Computer Programming').
-                    2. courseGrading: The course's grading scheme, detailing each component (e.g., assignments, exams) along with their respective weightings. The weightings should just be a number without the percentage sign. If there is a component that contains multiple subcomponents, the weightings should be distributed evenly. For example, if a course has 5 labs with a total worth of 10%, each lab should be worth 2%. It should be formatted as Lab #: Lab Weighting (e.g., Lab 1: 2%).
+                    2. courseGrading: The course's grading scheme, detailing each component (e.g., assignments, exams) along with their respective weights. The weights should just be a number without the percentage sign. If there is a component that contains multiple subcomponents, the weights should be distributed evenly. For example, if a course has 5 labs with a total worth of 10%, each lab should be worth 2%. It should be formatted as Lab #: Lab Weighting (e.g., Lab 1: 2%).
                     3. weeklyTopics: The specific content covered in the course on a weekly basis, formatted as "week number: content".
                     In cases where weekly topics are not clearly discernible or absent from the text, the output should explicitly state "No weekly topics found" under the weeklyTopics key.
 
@@ -69,23 +69,23 @@ export async function POST(req: NextRequest) {
                         "courseName": "CPS109: Introduction to Computer Programming",
                         "courseGrading": {
                           "Midterm Exam" {
-                            "weighting": "30%"
+                            "weight": "30%"
                             "mark": ""
                           },
                           "Final Exam" {
-                              "weighting": "40%"
+                              "weight": "40%"
                               "mark": ""
                           },
                           "Assignment 1" {
-                              "weighting": "10%"
+                              "weight": "10%"
                               "mark": ""
                           },
                           "Assignment 2" {
-                              "weighting": "10%"
+                              "weight": "10%"
                               "mark": ""
                           },
                           "Assignment 3" {
-                              "weighting": "10%"
+                              "weight": "10%"
                               "mark": ""
                           } 
                         },
@@ -103,23 +103,23 @@ export async function POST(req: NextRequest) {
                         "courseName": "CPS109: Introduction to Computer Programming",
                         "courseGrading": {
                             "Midterm Exam" {
-                                "weighting": "30%"
+                                "weight": "30%"
                                 "mark": ""
                             },
                             "Final Exam" {
-                                "weighting": "40%"
+                                "weight": "40%"
                                 "mark": ""
                             },
                             "Assignment 1" {
-                                "weighting": "10%"
+                                "weight": "10%"
                                 "mark": ""
                             },
                             "Assignment 2" {
-                                "weighting": "10%"
+                                "weight": "10%"
                                 "mark": ""
                             },
                             "Assignment 3" {
-                                "weighting": "10%"
+                                "weight": "10%"
                                 "mark": ""
                             } 
                         },

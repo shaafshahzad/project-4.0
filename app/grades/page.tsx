@@ -10,13 +10,12 @@ import { doc, onSnapshot } from "firebase/firestore";
 type Course = {
 	name: string;
 	grading: {
-		assignment: string;
-		weight: string;
-		mark: string;
+		[assignment: string]: {
+			mark: string;
+			weight: string;
+		};
 	};
-	weeklyTopics: {
-		[key: string]: string;
-	};
+	weeklyTopics: { [week: string]: string };
 };
 
 const Grades = () => {
@@ -31,15 +30,17 @@ const Grades = () => {
 				const unsubscribe = onSnapshot(docRef, (docSnap) => {
 					if (docSnap.exists()) {
 						const data = docSnap.data();
-						const fetchedCourses = Object.keys(data).map((key) => ({
+						let fetchedCourses = Object.keys(data).map((key) => ({
 							name: key,
-							...data[key],
+							grading: data[key].grading,
+							weeklyTopics: data[key].weeklyTopics,
 						}));
 
-						const sortedCourses = fetchedCourses.sort((a, b) =>
+						fetchedCourses = fetchedCourses.sort((a, b) =>
 							a.name.localeCompare(b.name)
 						);
-						setCourses(sortedCourses);
+						console.log(fetchedCourses);
+						setCourses(fetchedCourses);
 					}
 				});
 

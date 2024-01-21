@@ -5,17 +5,21 @@ import { AlertDialogDescription } from "@/components/ui/alert-dialog";
 
 // TODO: Add functionality to edit course details and update them in firestore
 
-interface EditCourseInputsProps {
-	course: {
-		name: string;
-		grading: {
-			[assignment: string]: {
-				mark: string;
-				weighting: string;
-			};
-		};
-		weeklyTopics: { [week: string]: string };
+interface Grading {
+	[assignment: string]: {
+		mark: string;
+		weight: string;
 	};
+}
+
+interface Course {
+	name: string;
+	grading: Grading;
+	weeklyTopics: { [week: string]: string };
+}
+
+interface EditCourseInputsProps {
+	course: Course;
 }
 
 const EditCourseInputs = ({ course }: EditCourseInputsProps) => {
@@ -36,15 +40,14 @@ const EditCourseInputs = ({ course }: EditCourseInputsProps) => {
 			<div>
 				<Label>Grading</Label>
 				<div className="space-y-2">
-					{Object.entries(grading).map(([key, { weighting }]) => (
+					{Object.entries(grading).map(([key, { weight }]) => (
 						<div key={key} className="flex gap-2">
 							<Input value={key || ""} className="w-1/2" />
-							<Input value={weighting} className="w-1/2" />
+							<Input value={weight} className="w-1/2" />
 						</div>
 					))}
 				</div>
 			</div>
-
 			<div>
 				<Label>Weekly Topics</Label>
 				<div className="space-y-2">

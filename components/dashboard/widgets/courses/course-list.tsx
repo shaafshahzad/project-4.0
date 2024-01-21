@@ -40,7 +40,7 @@ const CourseList = () => {
 							grading: data[key].grading,
 							weeklyTopics: data[key].weeklyTopics,
 						}));
-						// Sort courses by name
+
 						fetchedCourses = fetchedCourses.sort((a, b) =>
 							a.name.localeCompare(b.name)
 						);
