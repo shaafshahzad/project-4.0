@@ -14,8 +14,13 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 
 interface Course {
 	name: string;
-	grading: { [key: string]: string };
-	weeklyTopics: { [key: string]: string };
+	grading: {
+		[assignment: string]: {
+			mark: string;
+			weighting: string;
+		};
+	};
+	weeklyTopics: { [week: string]: string };
 }
 
 const CourseList = () => {
@@ -30,11 +35,16 @@ const CourseList = () => {
 				const unsubscribe = onSnapshot(docRef, (docSnap) => {
 					if (docSnap.exists()) {
 						const data = docSnap.data();
-						const courses = Object.keys(data).map((key) => ({
+						let fetchedCourses = Object.keys(data).map((key) => ({
 							name: key,
-							...data[key],
+							grading: data[key].grading,
+							weeklyTopics: data[key].weeklyTopics,
 						}));
-						setCourses(courses);
+						// Sort courses by name
+						fetchedCourses = fetchedCourses.sort((a, b) =>
+							a.name.localeCompare(b.name)
+						);
+						setCourses(fetchedCourses);
 					}
 				});
 
@@ -45,10 +55,6 @@ const CourseList = () => {
 		const unsubscribe = fetchCourses();
 		return () => unsubscribe && unsubscribe();
 	}, [user]);
-
-	useEffect(() => {
-		console.log(courses);
-	}, [courses]);
 
 	return (
 		<div className="h-32 overflow-auto">

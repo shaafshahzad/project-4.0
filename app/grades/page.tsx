@@ -7,11 +7,17 @@ import { useRouter } from "next/navigation";
 import { db } from "@/lib/firebase";
 import { doc, onSnapshot } from "firebase/firestore";
 
-interface Course {
+type Course = {
 	name: string;
-	grading: { [key: string]: string };
-	weeklyTopics: { [key: string]: string };
-}
+	grading: {
+		assignment: string;
+		weight: string;
+		mark: string;
+	};
+	weeklyTopics: {
+		[key: string]: string;
+	};
+};
 
 const Grades = () => {
 	const router = useRouter();

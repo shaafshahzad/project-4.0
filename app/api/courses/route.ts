@@ -68,11 +68,26 @@ export async function POST(req: NextRequest) {
                     {
                         "courseName": "CPS109: Introduction to Computer Programming",
                         "courseGrading": {
-                          "Midterm Exam": "30%",
-                          "Final Exam": "40%",
-                          "Assignment 1": "10%",
-                          "Assignment 2": "10%",
-                          "Assignment 3": "10%"
+                          "Midterm Exam" {
+                            "weighting": "30%"
+                            "mark": ""
+                          },
+                          "Final Exam" {
+                              "weighting": "40%"
+                              "mark": ""
+                          },
+                          "Assignment 1" {
+                              "weighting": "10%"
+                              "mark": ""
+                          },
+                          "Assignment 2" {
+                              "weighting": "10%"
+                              "mark": ""
+                          },
+                          "Assignment 3" {
+                              "weighting": "10%"
+                              "mark": ""
+                          } 
                         },
                         "weeklyTopics": {
                           "Week 1": "Basics of Programming",
@@ -87,11 +102,26 @@ export async function POST(req: NextRequest) {
                     {
                         "courseName": "CPS109: Introduction to Computer Programming",
                         "courseGrading": {
-                          "Midterm Exam": "30%",
-                          "Final Exam": "40%",
-                          "Assignment 1": "10%",
-                          "Assignment 2": "10%",
-                          "Assignment 3": "10%"
+                            "Midterm Exam" {
+                                "weighting": "30%"
+                                "mark": ""
+                            },
+                            "Final Exam" {
+                                "weighting": "40%"
+                                "mark": ""
+                            },
+                            "Assignment 1" {
+                                "weighting": "10%"
+                                "mark": ""
+                            },
+                            "Assignment 2" {
+                                "weighting": "10%"
+                                "mark": ""
+                            },
+                            "Assignment 3" {
+                                "weighting": "10%"
+                                "mark": ""
+                            } 
                         },
                         "weeklyTopics": "No weekly topics found"
                     }

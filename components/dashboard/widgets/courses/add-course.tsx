@@ -16,7 +16,6 @@ import { doc, updateDoc, deleteField } from "firebase/firestore";
 import { SquarePen } from "lucide-react";
 import React from "react";
 import AddCourseInputs from "./add-course-inputs";
-import { Button } from "@/components/ui/button";
 
 const AddCourse = () => {
 	const AddCourse = async () => {};
@@ -24,9 +23,7 @@ const AddCourse = () => {
 	return (
 		<AlertDialog>
 			<AlertDialogTrigger>
-				<Button className="flex flex-row items-center">
-					Add Course
-				</Button>
+				<div className="flex flex-row items-center">Add Course</div>
 			</AlertDialogTrigger>
 			<AlertDialogContent>
 				<AlertDialogHeader>

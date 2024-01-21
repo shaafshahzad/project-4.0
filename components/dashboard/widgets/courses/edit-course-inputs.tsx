@@ -8,8 +8,13 @@ import { AlertDialogDescription } from "@/components/ui/alert-dialog";
 interface EditCourseInputsProps {
 	course: {
 		name: string;
-		grading: { [key: string]: string };
-		weeklyTopics: { [key: string]: string };
+		grading: {
+			[assignment: string]: {
+				mark: string;
+				weighting: string;
+			};
+		};
+		weeklyTopics: { [week: string]: string };
 	};
 }
 
@@ -22,12 +27,6 @@ const EditCourseInputs = ({ course }: EditCourseInputsProps) => {
 		setName(e.target.value);
 	};
 
-	const handleGradingKeyChange = () => {};
-
-	const handleGradingValueChange = () => {};
-
-	const handleWeeklyTopicsChange = () => {};
-
 	return (
 		<AlertDialogDescription className="space-y-4 overflow-auto h-96">
 			<div>
@@ -37,32 +36,22 @@ const EditCourseInputs = ({ course }: EditCourseInputsProps) => {
 			<div>
 				<Label>Grading</Label>
 				<div className="space-y-2">
-					{Object.entries(grading).map(([key, value], index) => (
-						<div key={index} className="flex gap-2">
-							<Input
-								value={key}
-								className="w-3/4"
-								onChange={handleGradingKeyChange}
-							/>
-							<Input
-								value={value}
-								className="w-1/4"
-								onChange={handleGradingValueChange}
-							/>
+					{Object.entries(grading).map(([key, { weighting }]) => (
+						<div key={key} className="flex gap-2">
+							<Input value={key || ""} className="w-1/2" />
+							<Input value={weighting} className="w-1/2" />
 						</div>
 					))}
 				</div>
 			</div>
+
 			<div>
 				<Label>Weekly Topics</Label>
 				<div className="space-y-2">
 					{Object.entries(weeklyTopics).map(([key, value], index) => (
 						<div key={index} className="gap-2">
 							<Label>{key}</Label>
-							<Input
-								value={value}
-								onChange={handleWeeklyTopicsChange}
-							/>
+							<Input value={value} />
 						</div>
 					))}
 				</div>

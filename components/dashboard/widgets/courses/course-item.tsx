@@ -7,8 +7,13 @@ import { Separator } from "@/components/ui/separator";
 interface CourseItemProps {
 	course: {
 		name: string;
-		grading: { [key: string]: string };
-		weeklyTopics: { [key: string]: string };
+		grading: {
+			[assignment: string]: {
+				mark: string;
+				weighting: string;
+			};
+		};
+		weeklyTopics: { [week: string]: string };
 	};
 	userId: string;
 }
