@@ -4,17 +4,21 @@ import DeleteCourse from "./delete-course";
 import EditCourse from "./edit-course";
 import { Separator } from "@/components/ui/separator";
 
-interface CourseItemProps {
-	course: {
-		name: string;
-		grading: {
-			[assignment: string]: {
-				mark: string;
-				weighting: string;
-			};
-		};
-		weeklyTopics: { [week: string]: string };
+interface Grading {
+	[assignment: string]: {
+		mark: string;
+		weight: string;
 	};
+}
+
+interface Course {
+	name: string;
+	grading: Grading;
+	weeklyTopics: { [week: string]: string };
+}
+
+interface CourseItemProps {
+	course: Course;
 	userId: string;
 }
 

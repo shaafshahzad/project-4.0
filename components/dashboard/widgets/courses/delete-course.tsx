@@ -14,17 +14,21 @@ import { doc, updateDoc, deleteField } from "firebase/firestore";
 import { TrashIcon } from "lucide-react";
 import React from "react";
 
-interface DeleteCourseProps {
-	course: {
-		name: string;
-		grading: {
-			[assignment: string]: {
-				mark: string;
-				weighting: string;
-			};
-		};
-		weeklyTopics: { [week: string]: string };
+interface Grading {
+	[assignment: string]: {
+		mark: string;
+		weight: string;
 	};
+}
+
+interface Course {
+	name: string;
+	grading: Grading;
+	weeklyTopics: { [week: string]: string };
+}
+
+interface DeleteCourseProps {
+	course: Course;
 	userId: string;
 }
 
