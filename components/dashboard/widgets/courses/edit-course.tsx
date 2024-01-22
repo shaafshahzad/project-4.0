@@ -17,17 +17,21 @@ import { SquarePen } from "lucide-react";
 import React from "react";
 import EditCourseInputs from "./edit-course-inputs";
 
-interface EditCourseProps {
-	course: {
-		name: string;
-		grading: {
-			[assignment: string]: {
-				mark: string;
-				weighting: string;
-			};
-		};
-		weeklyTopics: { [week: string]: string };
+interface Grading {
+	[assignment: string]: {
+		mark: string;
+		weight: string;
 	};
+}
+
+interface Course {
+	name: string;
+	grading: Grading;
+	weeklyTopics: { [week: string]: string };
+}
+
+interface EditCourseProps {
+	course: Course;
 	userId: string;
 }
 

@@ -7,14 +7,24 @@ import { db } from "@/lib/firebase";
 import { useAuth } from "@/lib/hooks/use-auth";
 import { useRouter } from "next/navigation";
 import { doc, setDoc } from "firebase/firestore";
+import Modal from "@/components/modal";
+import {
+	Card,
+	CardContent,
+	CardDescription,
+	CardHeader,
+	CardTitle,
+} from "@/components/ui/card";
 
 const PdfUpload = () => {
 	const [upload, setUpload] = useState<File | null>(null);
+	const [isUploadingPdf, setIsUploadingPdf] = useState(false);
 	const router = useRouter();
 	const user = useAuth(router);
 
 	const uploadPdf = async () => {
 		if (upload && user) {
+			setIsUploadingPdf(true);
 			const formData = new FormData();
 			formData.append("file", upload);
 
@@ -43,6 +53,7 @@ const PdfUpload = () => {
 				console.error("Error sending PDF to API: ", error);
 			}
 		}
+		setIsUploadingPdf(false);
 	};
 
 	return (
@@ -60,6 +71,21 @@ const PdfUpload = () => {
 			<Button className="w-1/4 h-full border-2" onClick={uploadPdf}>
 				Upload
 			</Button>
+			<Modal isOpen={isUploadingPdf} handleClose={() => {}}>
+				<Card className="flex flex-col items-center justify-center">
+					<CardHeader>
+						<CardTitle>Uploading Course Outline</CardTitle>
+					</CardHeader>
+					<CardContent className="flex flex-col items-center justify-center">
+						<CardDescription className="text-center">
+							Your course outline is being uploaded.
+							<br />
+							This may take some time.
+						</CardDescription>
+						<div className="mt-8 w-16 h-16 border-t-2  border-foreground rounded-full animate-spin" />
+					</CardContent>
+				</Card>
+			</Modal>
 		</div>
 	);
 };

@@ -27,6 +27,7 @@
     "firebase": "^10.7.1",
     "firebase-admin": "^12.0.0",
     "formidable": "^3.5.1",
+    "framer-motion": "^10.18.0",
     "lucide-react": "^0.309.0",
     "micro": "^10.0.1",
     "multiparty": "^4.2.3",

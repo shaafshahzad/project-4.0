@@ -110,7 +110,7 @@ const CourseGrades = ({ course, userId }: CourseGradesProps) => {
 		: [];
 
 	const passOrFail = (grade: number) => {
-		return grade > 49.5;
+		return grade >= 49.5;
 	};
 
 	return (
@@ -135,7 +135,9 @@ const CourseGrades = ({ course, userId }: CourseGradesProps) => {
 							key={assignment}
 							className="w-full flex justify-between"
 						>
-							<Label className="text-xs">{assignment}</Label>
+							<Label className="text-xs max-w-[45%]">
+								{assignment}
+							</Label>
 							<div className="w-1/2 flex justify-end gap-4">
 								<Input
 									placeholder="Add Mark"
@@ -164,7 +166,7 @@ const CourseGrades = ({ course, userId }: CourseGradesProps) => {
 					<Input
 						value={currentGrade}
 						readOnly
-						placeholder="100"
+						placeholder="0"
 						className={`w-1/2 h-1/2 text-xs text-center truncate pointer-events-none ${
 							passOrFail(currentGrade)
 								? "text-green-50 bg-green-600"
@@ -177,7 +179,7 @@ const CourseGrades = ({ course, userId }: CourseGradesProps) => {
 					<Input
 						value={totalGrade}
 						readOnly
-						placeholder="100"
+						placeholder="0"
 						className={`w-1/2 h-1/2 text-xs text-center truncate pointer-events-none ${
 							passOrFail(totalGrade)
 								? "text-green-50 bg-green-600"
