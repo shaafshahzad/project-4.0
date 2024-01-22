@@ -12,14 +12,16 @@ import {
 import { db } from "@/lib/firebase";
 import { ScrollArea } from "@/components/ui/scroll-area";
 
+interface Grading {
+	[assignment: string]: {
+		mark: string;
+		weight: string;
+	};
+}
+
 interface Course {
 	name: string;
-	grading: {
-		[assignment: string]: {
-			mark: string;
-			weighting: string;
-		};
-	};
+	grading: Grading;
 	weeklyTopics: { [week: string]: string };
 }
 
