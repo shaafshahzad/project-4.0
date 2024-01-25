@@ -13,7 +13,7 @@ import AddCourse from "./add-course";
 
 const Courses = () => {
 	return (
-		<Card className="flex flex-col col-span-2">
+		<Card className="flex flex-col col-span-2 row-span-1">
 			<CardHeader className="flex flex-row justify-between">
 				<div className="flex flex-col">
 					<CardTitle>Your courses</CardTitle>

@@ -13,51 +13,12 @@ import {
 	AlertDialogHeader,
 	AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-
-type Course = {
-	name: string;
-	grading: {
-		[assignment: string]: {
-			mark: string;
-			weight: string;
-		};
-	};
-	weeklyTopics: { [week: string]: string };
-};
+import { useCourses } from "@/lib/hooks/use-courses";
 
 const Grades = () => {
 	const router = useRouter();
 	const user = useAuth(router);
-	const [courses, setCourses] = useState<Course[]>([]);
-
-	useEffect(() => {
-		const fetchCourses = () => {
-			if (user) {
-				const docRef = doc(db, "courses", user.uid);
-				const unsubscribe = onSnapshot(docRef, (docSnap) => {
-					if (docSnap.exists()) {
-						const data = docSnap.data();
-						let fetchedCourses = Object.keys(data).map((key) => ({
-							name: key,
-							grading: data[key].grading,
-							weeklyTopics: data[key].weeklyTopics,
-						}));
-
-						fetchedCourses = fetchedCourses.sort((a, b) =>
-							a.name.localeCompare(b.name)
-						);
-						console.log(fetchedCourses);
-						setCourses(fetchedCourses);
-					}
-				});
-
-				return unsubscribe;
-			}
-		};
-
-		const unsubscribe = fetchCourses();
-		return () => unsubscribe && unsubscribe();
-	}, [user]);
+	const courses = useCourses(user);
 
 	return (
 		<div className="flex flex-col px-11 py-6 h-[calc(100%-73px)]">
