@@ -57,10 +57,10 @@ const PdfUpload = () => {
 	};
 
 	return (
-		<div className="flex justify-between gap-4">
+		<div className="w-full flex gap-2">
 			<Input
 				accept=".pdf"
-				className="w-3/4 border-2 cursor-pointer"
+				className="w-3/4"
 				type="file"
 				onChange={(e) => {
 					if (e.target.files && e.target.files.length > 0) {
@@ -68,15 +68,15 @@ const PdfUpload = () => {
 					}
 				}}
 			/>
-			<Button className="w-1/4 h-full border-2" onClick={uploadPdf}>
+			<Button className="w-1/4" onClick={uploadPdf}>
 				Upload
 			</Button>
 			<Modal isOpen={isUploadingPdf} handleClose={() => {}}>
-				<Card className="flex flex-col items-center justify-center">
+				<Card className="flex flex-col items-center">
 					<CardHeader>
 						<CardTitle>Uploading Course Outline</CardTitle>
 					</CardHeader>
-					<CardContent className="flex flex-col items-center justify-center">
+					<CardContent className="flex flex-col items-center">
 						<CardDescription className="text-center">
 							Your course outline is being uploaded.
 							<br />

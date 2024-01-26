@@ -3,7 +3,6 @@
 import { useGrades } from "@/lib/hooks/use-grades";
 import { Separator } from "@/components/ui/separator";
 import React, { useEffect } from "react";
-import { Label } from "@/components/ui/label";
 
 interface Grading {
 	[assignment: string]: {
@@ -30,14 +29,14 @@ const GradesItem = (course: Course) => {
 
 	return (
 		<>
-			<div className="flex text-xs">
-				<h1 className="w-1/2">{course.name}</h1>
-				<div className="w-1/2 flex justify-between items-center">
-					<p className="w-1/2 text-center">{currentGrade}%</p>
-					<p className="w-1/2 text-center">{remainingWeight}%</p>
+			<div className="flex text-sm py-2">
+				<p className="w-1/2">{course.name}</p>
+				<div className="flex w-1/2 items-center">
+					<p className="text-center w-1/2">{currentGrade}%</p>
+					<p className="text-center w-1/2">{remainingWeight}%</p>
 				</div>
 			</div>
-			<Separator className="my-2" />
+			<Separator className="" />
 		</>
 	);
 };

@@ -9,14 +9,9 @@ import {
 	AlertDialogAction,
 	AlertDialogDescription,
 } from "@/components/ui/alert-dialog";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { db } from "@/lib/firebase";
-import { doc, updateDoc, deleteField } from "firebase/firestore";
-import { SquarePen } from "lucide-react";
 import React from "react";
 import AddCourseInputs from "./add-course-inputs";
-import { Button } from "@/components/ui/button";
+import { PlusSquare } from "lucide-react";
 
 const AddCourse = () => {
 	const AddCourse = async () => {};
@@ -24,9 +19,7 @@ const AddCourse = () => {
 	return (
 		<AlertDialog>
 			<AlertDialogTrigger>
-				<Button className="flex flex-row items-center">
-					Add Course
-				</Button>
+				<PlusSquare className="">Add Course</PlusSquare>
 			</AlertDialogTrigger>
 			<AlertDialogContent>
 				<AlertDialogHeader>

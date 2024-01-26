@@ -25,9 +25,9 @@ interface CourseItemProps {
 const CourseItem = ({ course, userId }: CourseItemProps) => {
 	return (
 		<>
-			<div className="p-1 flex items-center justify-between duration-200 text-xs">
-				<h1>{course.name}</h1>
-				<div className="flex items-center gap-2 ml-1">
+			<div className="flex justify-between items-center py-1 text-sm">
+				<p>{course.name}</p>
+				<div className="flex">
 					<EditCourse course={course} userId={userId} />
 					<DeleteCourse course={course} userId={userId} />
 				</div>

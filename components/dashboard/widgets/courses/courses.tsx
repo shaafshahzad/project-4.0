@@ -2,20 +2,20 @@ import {
 	Card,
 	CardContent,
 	CardDescription,
+	CardFooter,
 	CardHeader,
 	CardTitle,
 } from "@/components/ui/card";
 import React from "react";
 import CourseList from "./course-list";
 import PdfUpload from "./pdf-upload";
-import { Button } from "@/components/ui/button";
 import AddCourse from "./add-course";
 
 const Courses = () => {
 	return (
-		<Card className="flex flex-col col-span-2 row-span-1">
+		<Card className="col-span-2 flex flex-col">
 			<CardHeader className="flex flex-row justify-between">
-				<div className="flex flex-col">
+				<div className="w-[85%]">
 					<CardTitle>Your courses</CardTitle>
 					<CardDescription>
 						Upload your course outlines or add them manually
@@ -23,10 +23,12 @@ const Courses = () => {
 				</div>
 				<AddCourse />
 			</CardHeader>
-			<CardContent className="h-full flex flex-col justify-between">
+			<CardContent className="h-full overflow-y-auto">
 				<CourseList />
-				<PdfUpload />
 			</CardContent>
+			<CardFooter className="pt-2">
+				<PdfUpload />
+			</CardFooter>
 		</Card>
 	);
 };
