@@ -1,9 +1,8 @@
-import { NextRequest, NextResponse } from 'next/server'; // To handle the request and response
-import { promises as fs } from 'fs'; // To save the file temporarily
-import { v4 as uuidv4 } from 'uuid'; // To generate a unique filename
-import PDFParser from 'pdf2json'; // To parse the pdf
+import { NextRequest, NextResponse } from 'next/server';
+import { promises as fs } from 'fs';
+import { v4 as uuidv4 } from 'uuid';
+import PDFParser from 'pdf2json';
 import OpenAI from 'openai';
-import { db } from '@/lib/firebase';
 
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 

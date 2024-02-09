@@ -64,7 +64,7 @@ const CourseList = () => {
 					))}
 				</div>
 			) : (
-				<div className="">
+				<div className="flex flex-col items-center justify-center w-full h-full text-sm">
 					<p>No courses added yet</p>
 					<p className="">Add a course to get started!</p>
 				</div>

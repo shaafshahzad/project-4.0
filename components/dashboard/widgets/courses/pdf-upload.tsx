@@ -72,7 +72,7 @@ const PdfUpload = () => {
 				Upload
 			</Button>
 			<Modal isOpen={isUploadingPdf} handleClose={() => {}}>
-				<Card className="flex flex-col items-center">
+				<Card className="flex flex-col items-center bg-card z-40">
 					<CardHeader>
 						<CardTitle>Uploading Course Outline</CardTitle>
 					</CardHeader>
