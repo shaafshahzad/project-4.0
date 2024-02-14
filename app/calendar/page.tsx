@@ -1,72 +1,50 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React from "react";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
+import timeGridPlugin from "@fullcalendar/timegrid";
 import googleCalendarPlugin from "@fullcalendar/google-calendar";
 import { useAuth } from "@/lib/hooks/use-auth";
 import { useRouter } from "next/navigation";
-
-interface GoogleCalendarEventItem {
-	summary: string;
-	start: {
-		dateTime?: string;
-		date?: string;
-	};
-	end: {
-		dateTime?: string;
-		date?: string;
-	};
-}
+import Sidebar from "@/components/calendar/sidebar";
 
 const Calendar = () => {
-	const [events, setEvents] = useState([]);
 	const router = useRouter();
 	const user = useAuth(router);
-	const accessToken = user?.googleAccessToken;
-
-	useEffect(() => {
-		const fetchEvents = async () => {
-			const headers = new Headers();
-			console.log(accessToken);
-			headers.append("Authorization", `Bearer ${accessToken}`);
-
-			const response = await fetch(
-				"https://www.googleapis.com/calendar/v3/calendars/primary/events",
-				{
-					headers: headers,
-				}
-			);
-
-			if (!response.ok) {
-				console.error("Error fetching calendar events");
-				return;
-			}
-
-			const data = await response.json();
-			const fetchedEvents = data.items.map(
-				(item: GoogleCalendarEventItem) => ({
-					title: item.summary,
-					start: item.start.dateTime || item.start.date,
-					end: item.end.dateTime || item.end.date,
-				})
-			);
-
-			setEvents(fetchedEvents);
-		};
-
-		if (accessToken) {
-			fetchEvents();
-		}
-	}, [accessToken]);
+	const userEmail = user?.email || "";
+	const accessToken = user?.googleAccessToken || "";
 
 	return (
-		<div>
-			<FullCalendar
-				plugins={[dayGridPlugin, googleCalendarPlugin]}
-				initialView="dayGridMonth"
-				events={events} // Pass the events state to FullCalendar
-			/>
+		<div className="w-full h-full flex">
+			<Sidebar accessToken={accessToken} />
+			<div className="w-full p-14">
+				<FullCalendar
+					plugins={[
+						dayGridPlugin,
+						timeGridPlugin,
+						googleCalendarPlugin,
+					]}
+					initialView="timeGridWeek"
+					headerToolbar={{
+						left: "prev,next",
+						center: "title",
+						right: "dayGridMonth,timeGridWeek,timeGridDay",
+					}}
+					googleCalendarApiKey={
+						process.env.NEXT_PUBLIC_GOOGLE_CALENDAR_API_KEY
+					}
+					eventSources={[
+						{
+							googleCalendarId: `${userEmail}`,
+						},
+					]}
+					nowIndicator
+					now={new Date().toISOString()}
+					allDaySlot={false}
+					height="100%"
+				/>
+			</div>
 		</div>
 	);
 };

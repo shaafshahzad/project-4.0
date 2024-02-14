@@ -4,7 +4,7 @@ import React from "react";
 import Quote from "@/components/dashboard/quote";
 import Courses from "@/components/dashboard/widgets/courses/courses";
 import Calendar from "@/components/dashboard/widgets/calendar/calendar";
-import Attendance from "@/components/dashboard/widgets/attendance/attendance";
+import Content from "@/components/dashboard/widgets/content/content";
 import Grades from "@/components/dashboard/widgets/grades/grades";
 import useScreenSize from "@/lib/hooks/use-screensize";
 
@@ -26,7 +26,7 @@ const Dashboard = () => {
 			>
 				<Courses />
 				<Calendar />
-				<Attendance />
+				<Content />
 				<Grades />
 			</div>
 		</div>
