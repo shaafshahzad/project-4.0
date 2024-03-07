@@ -1,14 +1,3 @@
-interface TimeSlot {
-	start: Date;
-	end: Date;
-}
-
-interface TaskBlock {
-	start: Date;
-	end: Date;
-	taskName: string;
-}
-
 export async function fetchCalendarEvents(
 	accessToken: string,
 	timeMin: string,

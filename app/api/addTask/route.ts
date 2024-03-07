@@ -16,6 +16,7 @@ export async function POST(req: NextRequest) {
 	const values = await req.json();
 	const dueDate = new Date(values.date);
 	const timeMin = new Date().toISOString();
+	console.log(timeMin);
 	const timeMax = dueDate.toISOString();
 
 	const events = await fetchCalendarEvents(accessToken, timeMin, timeMax);
