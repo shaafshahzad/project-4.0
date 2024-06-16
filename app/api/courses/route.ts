@@ -1,57 +1,59 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { promises as fs } from 'fs';
-import { v4 as uuidv4 } from 'uuid';
-import PDFParser from 'pdf2json';
-import OpenAI from 'openai';
+import { NextRequest, NextResponse } from "next/server";
+import { promises as fs } from "fs";
+import { v4 as uuidv4 } from "uuid";
+import PDFParser from "pdf2json";
+import OpenAI from "openai";
 
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
 export async function POST(req: NextRequest) {
-    const formData = await req.formData();
-    const uploadedFile = formData.get('file');
+	const formData = await req.formData();
+	const uploadedFile = formData.get("file");
 
-    let fileName = '';
-    let parsedText = '';
-    let extracted = '';
+	let fileName = "";
+	let parsedText = "";
+	let extracted = "";
 
-    if (uploadedFile) {
-        fileName = uuidv4();
+	if (uploadedFile) {
+		fileName = uuidv4();
 
-        const tempFilePath = `/tmp/${fileName}.pdf`;
+		const tempFilePath = `/tmp/${fileName}.pdf`;
 
-        let fileBuffer: Buffer;
-        if (uploadedFile instanceof Blob) {
-            const arrayBuffer = await uploadedFile.arrayBuffer();
-            fileBuffer = Buffer.from(arrayBuffer);
-        } else {
-            console.error('Uploaded file is not a Blob.');
-            return new NextResponse(null, { status: 400 });
-        }
+		let fileBuffer: Buffer;
+		if (uploadedFile instanceof Blob) {
+			const arrayBuffer = await uploadedFile.arrayBuffer();
+			fileBuffer = Buffer.from(arrayBuffer);
+		} else {
+			console.error("Uploaded file is not a Blob.");
+			return new NextResponse(null, { status: 400 });
+		}
 
-        await fs.writeFile(tempFilePath, fileBuffer);
+		await fs.writeFile(tempFilePath, fileBuffer);
 
-        const pdfParser = new (PDFParser as any)(null, 1);
-        const textPromise = new Promise((resolve, reject) => {
-            pdfParser.on('pdfParser_dataError', (errData: any) => reject(errData.parserError));
-            pdfParser.on('pdfParser_dataReady', async () => {
-                parsedText = await (pdfParser as any).getRawTextContent();
-                resolve(parsedText);
-            });
-        });
+		const pdfParser = new (PDFParser as any)(null, 1);
+		const textPromise = new Promise((resolve, reject) => {
+			pdfParser.on("pdfParser_dataError", (errData: any) =>
+				reject(errData.parserError)
+			);
+			pdfParser.on("pdfParser_dataReady", async () => {
+				parsedText = await (pdfParser as any).getRawTextContent();
+				resolve(parsedText);
+			});
+		});
 
-        pdfParser.loadPDF(tempFilePath);
+		pdfParser.loadPDF(tempFilePath);
 
-        try {
-            const text = await textPromise;
-        } catch (error) {
-            console.error("Error parsing PDF: ", error);
-        }
+		try {
+			const text = await textPromise;
+		} catch (error) {
+			console.error("Error parsing PDF: ", error);
+		}
 
-        const completion = await openai.chat.completions.create({
-            messages: [
-                {
-                    role: "system",
-                    content: `
+		const completion = await openai.chat.completions.create({
+			messages: [
+				{
+					role: "system",
+					content: `
                     Your assignment involves extracting and organizing comprehensive course information into a structured JSON format. This process requires you to identify three critical elements from the provided text:
 
                     1. courseName: The name of the course. Should be formatted as 'course code: course title' (e.g., 'CPS109: Introduction to Computer Programming').
@@ -89,7 +91,7 @@ export async function POST(req: NextRequest) {
                           } 
                         },
                         "weeklyTopics": {
-                          "Week 1": "Basics of Programming",
+                          "Week 1": "Basics of Programming, we do this, we do that, etc.",
                           "Week 2": "Control Structures",
                           "Week 3": "Data Structures",
                           // ... continue for each week if available
@@ -126,21 +128,20 @@ export async function POST(req: NextRequest) {
                     }
                     
                     Note: Pay careful attention to accurately parsing and formatting the course name, grading scheme, and weekly topics (if available).
-                    `
-                },
-                { role: "user", content: parsedText },
-            ],
-            model: "gpt-4-1106-preview",
-            max_tokens: 1000,
-            response_format: { type: "json_object" },
-        });
+                    `,
+				},
+				{ role: "user", content: parsedText },
+			],
+			model: "gpt-4-1106-preview",
+			max_tokens: 1000,
+			response_format: { type: "json_object" },
+		});
 
-        const extracted = completion.choices[0].message.content;
-        return NextResponse.json({ data: extracted, success: true });
+		const extracted = completion.choices[0].message.content;
+		return NextResponse.json({ data: extracted, success: true });
+	} else {
+		console.log("Uploaded file is not in the expected format.");
+	}
 
-    } else {
-        console.log('Uploaded file is not in the expected format.');
-    }
-
-    return NextResponse.json({ data: extracted, success: true });
+	return NextResponse.json({ data: extracted, success: true });
 }

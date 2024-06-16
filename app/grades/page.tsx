@@ -1,18 +1,10 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import CourseGrades from "@/components/grades/course-grades";
 import { useAuth } from "@/lib/hooks/use-auth";
 import { useRouter } from "next/navigation";
-import { db } from "@/lib/firebase";
-import { doc, onSnapshot } from "firebase/firestore";
 import { Card, CardContent } from "@/components/ui/card";
-import { PlusCircle } from "lucide-react";
-import {
-	AlertDialog,
-	AlertDialogHeader,
-	AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
 import { useCourses } from "@/lib/hooks/use-courses";
 
 const Grades = () => {
