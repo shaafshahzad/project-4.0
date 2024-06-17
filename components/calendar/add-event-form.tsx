@@ -4,6 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import { format } from "date-fns";
 import { CalendarIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -25,18 +26,20 @@ import {
 import { AccessToken } from "@/types";
 
 const FormSchema = z.object({
-  taskName: z.string({
-    required_error: "A task name is required.",
+  eventName: z.string({
+    required_error: "An event name is required.",
   }),
-  hours: z.string({
-    required_error: "Working hours are required.",
+  startDate: z.date({
+    required_error: "A start date is required.",
   }),
-  date: z.date({
-    required_error: "A date of birth is required.",
+  endDate: z.date({
+    required_error: "An end date is required.",
   }),
+  location: z.string().optional(),
+  description: z.string().optional(),
 });
 
-const AddTaskForm = ({ accessToken }: AccessToken) => {
+const AddEventForm = ({ accessToken }: AccessToken) => {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
   });
@@ -45,7 +48,7 @@ const AddTaskForm = ({ accessToken }: AccessToken) => {
     console.log(accessToken);
     console.log(values);
     try {
-      const response = await fetch("/api/addTask", {
+      const response = await fetch("/api/addEvent", {
         method: "POST",
         body: JSON.stringify(values),
         headers: {
@@ -55,9 +58,9 @@ const AddTaskForm = ({ accessToken }: AccessToken) => {
       });
 
       if (response.ok) {
-        console.log("Task added");
+        console.log("Event added");
       } else {
-        console.error("Failed to add task");
+        console.error("Failed to add event");
       }
     } catch (error) {
       console.error("Error:", error);
@@ -70,25 +73,13 @@ const AddTaskForm = ({ accessToken }: AccessToken) => {
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
           <FormField
             control={form.control}
-            name="taskName"
+            name="eventName"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Task name</FormLabel>
-                <FormControl>
-                  <Input placeholder="Enter your task's name here" {...field} />
-                </FormControl>
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="hours"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Working hours</FormLabel>
+                <FormLabel>Event Name</FormLabel>
                 <FormControl>
                   <Input
-                    placeholder="Enter how long this task will take"
+                    placeholder="Enter your event's name here"
                     {...field}
                   />
                 </FormControl>
@@ -97,10 +88,10 @@ const AddTaskForm = ({ accessToken }: AccessToken) => {
           />
           <FormField
             control={form.control}
-            name="date"
+            name="startDate"
             render={({ field }) => (
               <FormItem className="flex flex-col">
-                <FormLabel>Due date</FormLabel>
+                <FormLabel>Start Date</FormLabel>
                 <Popover>
                   <PopoverTrigger asChild>
                     <FormControl>
@@ -132,6 +123,59 @@ const AddTaskForm = ({ accessToken }: AccessToken) => {
               </FormItem>
             )}
           />
+          <FormField
+            control={form.control}
+            name="endDate"
+            render={({ field }) => (
+              <FormItem className="flex flex-col">
+                <FormLabel>End Date</FormLabel>
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <FormControl>
+                      <Button
+                        variant={"outline"}
+                        className={cn(
+                          "w-[240px] pl-3 text-left font-normal",
+                          !field.value && "text-muted-foreground"
+                        )}
+                      >
+                        {field.value ? (
+                          format(field.value, "PPP")
+                        ) : (
+                          <span>Pick a date</span>
+                        )}
+                        <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                      </Button>
+                    </FormControl>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-auto p-0" align="start">
+                    <Calendar
+                      mode="single"
+                      onSelect={field.onChange}
+                      disabled={(date) => date < new Date()}
+                      initialFocus
+                    />
+                  </PopoverContent>
+                </Popover>
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="description"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Description</FormLabel>
+                <FormControl>
+                  <Textarea
+                    placeholder="Enter a description for the event"
+                    className="resize-none"
+                    {...field}
+                  />
+                </FormControl>
+              </FormItem>
+            )}
+          />
           <Button type="submit" className="w-full">
             Submit
           </Button>
@@ -141,4 +185,4 @@ const AddTaskForm = ({ accessToken }: AccessToken) => {
   );
 };
 
-export default AddTaskForm;
+export default AddEventForm;
