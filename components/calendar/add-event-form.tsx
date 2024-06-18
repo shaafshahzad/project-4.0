@@ -23,6 +23,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { TimePickerInput } from "@/lib/utils/time-picker-input";
 import { AccessToken } from "@/types";
 
 const FormSchema = z.object({
@@ -43,6 +44,10 @@ const AddEventForm = ({ accessToken }: AccessToken) => {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
   });
+
+  const minuteRef = React.useRef<HTMLInputElement>(null);
+  const hourRef = React.useRef<HTMLInputElement>(null);
+  const secondRef = React.useRef<HTMLInputElement>(null);
 
   async function onSubmit(values: z.infer<typeof FormSchema>) {
     console.log(accessToken);
@@ -91,33 +96,58 @@ const AddEventForm = ({ accessToken }: AccessToken) => {
             name="startDate"
             render={({ field }) => (
               <FormItem className="flex flex-col">
-                <FormLabel>Start Date</FormLabel>
+                <FormLabel className="text-left">Start Date</FormLabel>
                 <Popover>
-                  <PopoverTrigger asChild>
-                    <FormControl>
+                  <FormControl>
+                    <PopoverTrigger asChild>
                       <Button
-                        variant={"outline"}
+                        variant="outline"
                         className={cn(
-                          "w-[240px] pl-3 text-left font-normal",
+                          "w-[280px] justify-start text-left font-normal",
                           !field.value && "text-muted-foreground"
                         )}
                       >
+                        <CalendarIcon className="mr-2 h-4 w-4" />
                         {field.value ? (
-                          format(field.value, "PPP")
+                          format(field.value, "PPP HH:mm")
                         ) : (
                           <span>Pick a date</span>
                         )}
-                        <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
                       </Button>
-                    </FormControl>
-                  </PopoverTrigger>
-                  <PopoverContent className="w-auto p-0" align="start">
+                    </PopoverTrigger>
+                  </FormControl>
+                  <PopoverContent className="w-auto p-0">
                     <Calendar
                       mode="single"
+                      selected={field.value}
                       onSelect={field.onChange}
-                      disabled={(date) => date < new Date()}
                       initialFocus
                     />
+                    <div className="p-3 border-t border-border flex justify-center">
+                      <div className="flex items-end gap-2 w-60">
+                        <div className="w-full gap-1 text-center">
+                          <TimePickerInput
+                            picker="hours"
+                            date={field.value}
+                            setDate={field.onChange}
+                            ref={hourRef}
+                            onRightFocus={() => minuteRef.current?.focus()}
+                            className="w-full gap-1 text-center"
+                          />
+                        </div>
+                        <div className="flex h-10 items-center">:</div>
+                        <div className="gap-1 text-center">
+                          <TimePickerInput
+                            picker="minutes"
+                            date={field.value}
+                            setDate={field.onChange}
+                            ref={minuteRef}
+                            onLeftFocus={() => hourRef.current?.focus()}
+                            className="w-full gap-1 text-center"
+                          />
+                        </div>
+                      </div>
+                    </div>
                   </PopoverContent>
                 </Popover>
               </FormItem>
@@ -131,22 +161,20 @@ const AddEventForm = ({ accessToken }: AccessToken) => {
                 <FormLabel>End Date</FormLabel>
                 <Popover>
                   <PopoverTrigger asChild>
-                    <FormControl>
-                      <Button
-                        variant={"outline"}
-                        className={cn(
-                          "w-[240px] pl-3 text-left font-normal",
-                          !field.value && "text-muted-foreground"
-                        )}
-                      >
-                        {field.value ? (
-                          format(field.value, "PPP")
-                        ) : (
-                          <span>Pick a date</span>
-                        )}
-                        <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-                      </Button>
-                    </FormControl>
+                    <Button
+                      variant="outline"
+                      className={cn(
+                        "w-[280px] justify-start text-left font-normal",
+                        !field.value && "text-muted-foreground"
+                      )}
+                    >
+                      <CalendarIcon className="mr-2 h-4 w-4" />
+                      {field.value ? (
+                        format(field.value, "PPP HH:mm")
+                      ) : (
+                        <span>Pick a date</span>
+                      )}
+                    </Button>
                   </PopoverTrigger>
                   <PopoverContent className="w-auto p-0" align="start">
                     <Calendar
@@ -155,6 +183,31 @@ const AddEventForm = ({ accessToken }: AccessToken) => {
                       disabled={(date) => date < new Date()}
                       initialFocus
                     />
+                    <div className="p-3 border-t border-border flex justify-center">
+                      <div className="flex items-end gap-2 w-60">
+                        <div className="w-full gap-1 text-center">
+                          <TimePickerInput
+                            picker="hours"
+                            date={field.value}
+                            setDate={field.onChange}
+                            ref={hourRef}
+                            onRightFocus={() => minuteRef.current?.focus()}
+                            className="w-full gap-1 text-center"
+                          />
+                        </div>
+                        <div className="flex h-10 items-center">:</div>
+                        <div className="gap-1 text-center">
+                          <TimePickerInput
+                            picker="minutes"
+                            date={field.value}
+                            setDate={field.onChange}
+                            ref={minuteRef}
+                            onLeftFocus={() => hourRef.current?.focus()}
+                            className="w-full gap-1 text-center"
+                          />
+                        </div>
+                      </div>
+                    </div>
                   </PopoverContent>
                 </Popover>
               </FormItem>
