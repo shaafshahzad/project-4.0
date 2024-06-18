@@ -73,7 +73,7 @@ const AddEventForm = ({ accessToken }: AccessToken) => {
   }
 
   return (
-    <div className="pt-10">
+    <div className="pt-10 w-[90%]">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
           <FormField
@@ -103,7 +103,7 @@ const AddEventForm = ({ accessToken }: AccessToken) => {
                       <Button
                         variant="outline"
                         className={cn(
-                          "w-[280px] justify-start text-left font-normal",
+                          "w-full justify-start text-left font-normal",
                           !field.value && "text-muted-foreground"
                         )}
                       >
@@ -164,7 +164,7 @@ const AddEventForm = ({ accessToken }: AccessToken) => {
                     <Button
                       variant="outline"
                       className={cn(
-                        "w-[280px] justify-start text-left font-normal",
+                        "w-full justify-start text-left font-normal",
                         !field.value && "text-muted-foreground"
                       )}
                     >

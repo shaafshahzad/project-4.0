@@ -5,12 +5,12 @@ import AddEventForm from "./add-event-form";
 
 const SidebarContent = ({ accessToken }: AccessToken) => {
   return (
-    <div className="w-full max-w-xs h-full lg:border-r flex flex-col">
-      <div className="w-full max-w-xs h-full lg:border-r flex flex-col items-center p-6">
+    <div className="w-full max-w-xs lg:border-r flex justify-evenly flex-col">
+      <div className="w-full max-w-xs flex flex-col items-center p-6">
         <p className="text-2xl font-bold">Add Task</p>
         <AddTaskForm accessToken={accessToken} />
       </div>
-      <div className="w-full max-w-xs h-full lg:border-r flex flex-col items-center p-6">
+      <div className="w-full max-w-xs flex flex-col items-center p-6">
         <p className="text-2xl font-bold">Add Event</p>
         <AddEventForm accessToken={accessToken} />
       </div>

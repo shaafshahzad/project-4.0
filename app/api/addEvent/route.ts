@@ -44,6 +44,4 @@ export async function POST(req: NextRequest) {
   const eventData = await response.json();
 
   return NextResponse.json({ "Event added": eventData });
-
-  // TODO: allow for event creation via Google Calendar API
 }
