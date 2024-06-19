@@ -20,7 +20,7 @@ interface WeeklyTopic {
 interface CourseData {
   name: string;
   grading: Grading[];
-  weeklyTopics: WeeklyTopic[];
+  topics: WeeklyTopic[];
 }
 
 interface AddCourseInputsProps {
@@ -32,7 +32,7 @@ const AddCourseInputs = ({ setCourseData }: AddCourseInputsProps) => {
   const [grading, setGrading] = React.useState<Grading[]>([
     { id: Date.now(), category: "", weight: "" },
   ]);
-  const [weeklyTopics, setWeeklyTopics] = React.useState<WeeklyTopic[]>([
+  const [topics, settopics] = React.useState<WeeklyTopic[]>([
     { id: Date.now(), week: "Week 1", topic: "" },
   ]);
 
@@ -56,13 +56,13 @@ const AddCourseInputs = ({ setCourseData }: AddCourseInputsProps) => {
   };
 
   const handleWeeklyTopic = (id: number, key: string, value: string) => {
-    const newWeeklyTopics = weeklyTopics.map((item) =>
+    const newtopics = topics.map((item) =>
       item.id === id ? { ...item, [key]: value } : item
     );
-    setWeeklyTopics(newWeeklyTopics);
+    settopics(newtopics);
     setCourseData((prev) => ({
       ...prev,
-      weeklyTopics: newWeeklyTopics,
+      topics: newtopics,
     }));
   };
 
@@ -81,24 +81,21 @@ const AddCourseInputs = ({ setCourseData }: AddCourseInputsProps) => {
   };
 
   const addWeeklyTopic = () => {
-    const newWeek = `Week ${weeklyTopics.length + 1}`;
-    setWeeklyTopics([
-      ...weeklyTopics,
-      { id: Date.now(), week: newWeek, topic: "" },
-    ]);
+    const newWeek = `Week ${topics.length + 1}`;
+    settopics([...topics, { id: Date.now(), week: newWeek, topic: "" }]);
   };
 
   const deleteWeeklyTopic = (id: number) => {
-    const newWeeklyTopics = weeklyTopics.filter((item) => item.id !== id);
-    setWeeklyTopics(
-      newWeeklyTopics.map((item, index) => ({
+    const newtopics = topics.filter((item) => item.id !== id);
+    settopics(
+      newtopics.map((item, index) => ({
         ...item,
         week: `Week ${index + 1}`,
       }))
     );
     setCourseData((prev) => ({
       ...prev,
-      weeklyTopics: newWeeklyTopics,
+      topics: newtopics,
     }));
   };
 
@@ -144,7 +141,7 @@ const AddCourseInputs = ({ setCourseData }: AddCourseInputsProps) => {
       <div>
         <Label>Weekly Topics (leave empty for none)</Label>
         <div className="space-y-2">
-          {weeklyTopics.map(({ id, week, topic }) => (
+          {topics.map(({ id, week, topic }) => (
             <div key={id} className="flex flex-col">
               <Label>{week}</Label>
               <div className="flex flex-row items-center gap-2">

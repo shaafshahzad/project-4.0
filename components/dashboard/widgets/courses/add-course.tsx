@@ -32,7 +32,7 @@ interface WeeklyTopic {
 interface CourseData {
   name: string;
   grading: Grading[];
-  weeklyTopics: WeeklyTopic[];
+  topics: WeeklyTopic[];
 }
 
 interface Props {
@@ -45,14 +45,14 @@ const AddCourse = ({ pathname }: Props) => {
   const [courseData, setCourseData] = React.useState<CourseData>({
     name: "",
     grading: [],
-    weeklyTopics: [],
+    topics: [],
   });
 
   const addCourse = async () => {
     if (!user) return;
 
     try {
-      const filteredWeeklyTopics = courseData.weeklyTopics.filter(
+      const filteredtopics = courseData.topics.filter(
         (topic) => topic.week && topic.topic
       );
       const userDocRef = doc(db, "courses", user.uid);
@@ -62,7 +62,7 @@ const AddCourse = ({ pathname }: Props) => {
             (acc, { category, weight }) => ({ ...acc, [category]: { weight } }),
             {}
           ),
-          weeklyTopics: filteredWeeklyTopics.reduce(
+          topics: filteredtopics.reduce(
             (acc, { week, topic }) => ({ ...acc, [week]: topic }),
             {}
           ),
@@ -95,7 +95,7 @@ const AddCourse = ({ pathname }: Props) => {
                 <path d="M8 12h8" />
                 <path d="M12 8v8" />
               </svg>
-              <p className="text-sm mt-2">Upload course outline</p>
+              <p className="text-sm mt-2">Add a new course</p>
             </CardContent>
           </Card>
         ) : (

@@ -13,7 +13,7 @@ interface Grading {
 interface Course {
   name: string;
   grading: Grading;
-  weeklyTopics: { [week: string]: string };
+  topics: { [week: string]: string };
 }
 
 interface EditCourseInputsProps {
@@ -50,15 +50,24 @@ const EditCourseInputs = ({ course, setCourse }: EditCourseInputsProps) => {
     setCourse({ ...course, grading: newGrading });
   };
 
-  const handleWeeklyTopicsChange = (week: string, value: string) => {
+  const handletopicsChange = (week: string, value: string) => {
     setCourse({
       ...course,
-      weeklyTopics: {
-        ...course.weeklyTopics,
+      topics: {
+        ...course.topics,
         [week]: value,
       },
     });
   };
+
+  // Sort the weekly topics by week number
+  const sortedTopics = Object.entries(course.topics).sort(
+    ([weekA], [weekB]) => {
+      const weekNumberA = parseInt(weekA.split(" ")[1]);
+      const weekNumberB = parseInt(weekB.split(" ")[1]);
+      return weekNumberA - weekNumberB;
+    }
+  );
 
   return (
     <AlertDialogDescription className="space-y-4 overflow-auto h-96">
@@ -94,12 +103,12 @@ const EditCourseInputs = ({ course, setCourse }: EditCourseInputsProps) => {
       <div>
         <Label>Weekly Topics</Label>
         <div className="space-y-2">
-          {Object.entries(course.weeklyTopics).map(([week, value]) => (
+          {sortedTopics.map(([week, value]) => (
             <div key={week} className="gap-2">
               <Label>{week}</Label>
               <Input
                 value={value}
-                onChange={(e) => handleWeeklyTopicsChange(week, e.target.value)}
+                onChange={(e) => handletopicsChange(week, e.target.value)}
               />
             </div>
           ))}
