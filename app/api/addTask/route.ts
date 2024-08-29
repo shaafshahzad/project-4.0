@@ -15,22 +15,22 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  const values = await req.json();
-  const dueDate = new Date(values.date);
-  const duration = values.hours * 60;
-  const timeMin = new Date().toISOString();
-  const timeMax = dueDate.toISOString();
+  try {
+    const values = await req.json();
+    const dueDate = new Date(values.date);
+    const duration = values.hours * 60; // Convert hours to minutes
+    const timeMin = new Date().toISOString();
+    const timeMax = dueDate.toISOString();
 
-  const events = await fetchCalendarEvents(accessToken, timeMin, timeMax);
-  let availableSlots = [];
+    const events = await fetchCalendarEvents(accessToken, timeMin, timeMax);
+    
+    if (events && events.items) {
+      const availableSlots = findAvailableSlots(
+        events.items,
+        new Date(timeMin),
+        dueDate
+      );
 
-  if (events && events.items) {
-    availableSlots = findAvailableSlots(
-      events.items,
-      new Date(timeMin),
-      dueDate
-    );
-    try {
       const allocatedSlots = allocateTaskTime(
         availableSlots,
         duration,
@@ -45,10 +45,13 @@ export async function POST(req: NextRequest) {
           values.taskName
         );
       }
-    } catch (error) {
-      console.error("Error:", error);
-    }
-  }
 
-  return NextResponse.json(events);
+      return NextResponse.json({ success: true, allocatedSlots });
+    } else {
+      return NextResponse.json({ error: "No events found" }, { status: 400 });
+    }
+  } catch (error) {
+    console.error("Error:", error);
+    return NextResponse.json({ error: "Failed to add task" }, { status: 500 });
+  }
 }

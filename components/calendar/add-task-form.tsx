@@ -53,7 +53,6 @@ const AddTaskForm = ({ accessToken }: AccessToken) => {
           Authorization: `${accessToken}`,
         },
       });
-
       if (response.ok) {
         console.log("Task added");
       } else {
