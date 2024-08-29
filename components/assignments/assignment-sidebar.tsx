@@ -42,14 +42,16 @@ const AssignmentSidebar = ({ assignments, courses, onFilterChange }: { assignmen
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>
                         <Button variant="outline" className="w-full justify-between">
-                            {selectedCourse}
-                            <ChevronDown className="h-4 w-4 opacity-50" />
+                            <span className="truncate">{selectedCourse}</span>
+                            <ChevronDown className="h-4 w-4 opacity-50 flex-shrink-0 ml-2" />
                         </Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent className="w-56">
                         <DropdownMenuItem onSelect={() => setSelectedCourse("All Courses")}>All Courses</DropdownMenuItem>
                         {courses.map((course) => (
-                            <DropdownMenuItem key={course.name} onSelect={() => setSelectedCourse(course.name)}>{course.name}</DropdownMenuItem>
+                            <DropdownMenuItem key={course.name} onSelect={() => setSelectedCourse(course.name)}>
+                                <span className="truncate">{course.name}</span>
+                            </DropdownMenuItem>
                         ))}
                     </DropdownMenuContent>
                 </DropdownMenu>

@@ -12,23 +12,24 @@ import { Assignment, Courses } from '@/types';
 interface AssignmentCardProps {
   assignment: Assignment;
   courses: Courses[];
+  courseColor: string;
   onToggleAllTasks: (assignmentId: string) => void;
   onDeleteAssignment: (id: string) => void;
   onEditAssignment: (assignment: Assignment) => void;
 }
 
-const AssignmentCard = ({ assignment, courses, onToggleAllTasks, onDeleteAssignment, onEditAssignment }: AssignmentCardProps) => {
+const AssignmentCard = ({ assignment, courses, courseColor, onToggleAllTasks, onDeleteAssignment, onEditAssignment }: AssignmentCardProps) => {
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
 
   return (
     <>
-      <Card className="cursor-pointer hover:shadow-md transition-shadow">
+      <Card className="cursor-pointer hover:shadow-md transition-shadow" style={{ borderLeft: `8px solid ${courseColor}` }}>
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
           <div className="flex flex-col">
             <CardTitle className="text-md font-medium">
               {assignment.title}
             </CardTitle>
-            <CardDescription className='text-xs'>
+            <CardDescription className='text-xs truncate max-w-[250px]'>
               {assignment.course}
             </CardDescription>
           </div>
