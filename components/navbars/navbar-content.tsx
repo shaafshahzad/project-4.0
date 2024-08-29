@@ -9,7 +9,7 @@ import Link from "next/link";
 import useScreenSize from "@/lib/hooks/use-screensize";
 
 const NavbarContent = () => {
-  const navbarItems = ["Dashboard", "Calendar", "Grades"];
+  const navbarItems = ["Dashboard", "Calendar", "Grades", "Assignments", "Exams"];
   const isScreenBreakpoint = useScreenSize();
 
   return (
