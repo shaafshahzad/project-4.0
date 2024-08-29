@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useCallback } from 'react'
+import React, { useState, useCallback, useMemo } from 'react'
 import { useAuth } from "@/lib/hooks/use-auth";
 import { useRouter } from "next/navigation";
 import { useCourses } from "@/lib/hooks/use-courses";
@@ -21,6 +21,7 @@ const Assignments = () => {
     status: null,
     priority: null,
   });
+  const [sortBy, setSortBy] = useState<string>('dueDate');
 
   const handleAddAssignment = async (newAssignment: Assignment) => {
     if (user?.uid) {
@@ -71,15 +72,38 @@ const Assignments = () => {
     setFilters(newFilters);
   }, []);
 
+  const handleSort = useCallback((newSortBy: string) => {
+    setSortBy(newSortBy);
+  }, []);
+
+  const sortedAssignments = useMemo(() => {
+    return [...assignments].sort((a, b) => {
+      switch (sortBy) {
+        case 'dueDate':
+          return a.dueDate.getTime() - b.dueDate.getTime();
+        case 'priority':
+          const priorityOrder = { High: 3, Medium: 2, Low: 1 };
+          return priorityOrder[b.priority] - priorityOrder[a.priority];
+        case 'course':
+          return a.course.localeCompare(b.course);
+        case 'status':
+          return a.status.localeCompare(b.status);
+        default:
+          return 0;
+      }
+    });
+  }, [assignments, sortBy]);
+
   return (
     <div className="flex flex-row justify-between px-11 py-6 h-[calc(100%-73px)]">
       <div className='flex flex-col w-full pr-11'>
         <Header 
           courses={courses} 
           onAddAssignment={handleAddAssignment}
+          onSort={handleSort}
         />
         <AssignmentList 
-          assignments={assignments} 
+          assignments={sortedAssignments} 
           courses={courses}
           onToggleAllTasks={handleToggleAllTasks}
           onDeleteAssignment={handleDeleteAssignment}

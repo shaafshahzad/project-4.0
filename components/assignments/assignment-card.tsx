@@ -47,17 +47,15 @@ const AssignmentCard = ({ assignment, courses, onToggleAllTasks, onDeleteAssignm
               <Button variant="outline" size="icon" onClick={() => setIsEditDialogOpen(true)}>
                 <Edit2 className="h-4 w-4" />
               </Button>
-              <Button variant="outline" size="icon" onClick={() => onDeleteAssignment(assignment.id)}>
+              <Button variant="destructive" size="icon" onClick={() => onDeleteAssignment(assignment.id)}>
                 <Trash2 className="h-4 w-4" />
-              </Button>
-              <Button variant="outline" size="icon">
-                <Bell className="h-4 w-4" />
               </Button>
             </div>
             <Button 
               variant={assignment.status === 'Completed' ? "secondary" : "outline"} 
               size="sm"
               onClick={() => onToggleAllTasks(assignment.id)}
+              className={assignment.status === 'Completed' ? "bg-green-500 hover:bg-green-600 text-white" : ""}
             >
               <CheckCircle2 className="h-4 w-4 mr-2" />
               {assignment.status === 'Completed' ? 'Completed' : 'Mark Complete'}
