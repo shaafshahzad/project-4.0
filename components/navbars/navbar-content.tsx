@@ -9,9 +9,9 @@ import Link from "next/link";
 import useScreenSize from "@/lib/hooks/use-screensize";
 
 const NavbarContent = () => {
-  const navbarItems = ["Dashboard", "Calendar", "Grades", "Assignments", "Exams"];
+  const navbarItems = ["Dashboard", "Calendar", "Grades", "Assignments"];
   const isScreenBreakpoint = useScreenSize();
-
+  
   return (
     <NavigationMenuList
       className={`gap-x-2 text-xs flex ${

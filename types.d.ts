@@ -14,3 +14,21 @@ export interface Courses {
   };
   topics: { [week: string]: string };
 }
+
+export type Task = {
+  id: number;
+  description: string;
+  completed: boolean;
+}
+
+export type Assignment = {
+  id: string;
+  course: string;
+  title: string;
+  dueDate: Date;
+  status: string;
+  priority: 'High' | 'Medium' | 'Low';
+  progress: number;
+  description: string;
+  tasks: Task[];
+}
