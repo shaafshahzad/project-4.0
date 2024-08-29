@@ -5,8 +5,8 @@ TODO:
     - [ ] Directory of all exams, with dates and times
     - [ ] Ability to select all exams that a student wants to add
     - [ ] Ability to export exams to a calendar
-- [ ] Implement assignments page
-    - [ ] Track assignment progress
-    - [ ] Track assignment due dates
+- [x] Implement assignments page
+    - [x] Track assignment progress
+    - [x] Track assignment due dates
 - [ ] Implement smart task prioritization
     - [ ] Task priority based on due date, importance, and time left
