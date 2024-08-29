@@ -32,3 +32,9 @@ export type Assignment = {
   description: string;
   tasks: Task[];
 }
+
+export interface FilterOptions {
+  course: string | null;
+  status: string | null;
+  priority: string | null;
+}

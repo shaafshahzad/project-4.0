@@ -1,13 +1,14 @@
 "use client";
 
-import React from 'react'
+import React, { useState, useCallback } from 'react'
 import { useAuth } from "@/lib/hooks/use-auth";
 import { useRouter } from "next/navigation";
 import { useCourses } from "@/lib/hooks/use-courses";
 import { useAssignments } from '@/lib/hooks/use-assignment';
 import AssignmentList from '@/components/assignments/assignment-list';
-import Header from '@/components/assignments/header';
-import { Assignment } from '@/types';
+import Header from '@/components/assignments/assignment-header';
+import AssignmentSidebar from '@/components/assignments/assignment-sidebar';
+import { Assignment, FilterOptions } from '@/types';
 import { addAssignmentToDatabase, updateAssignment, deleteAssignment, toggleAllTasks } from '@/lib/utils/assignment-functions';
 
 const Assignments = () => {
@@ -15,6 +16,11 @@ const Assignments = () => {
   const user = useAuth(router);
   const courses = useCourses(user);
   const assignments = useAssignments(user?.uid);
+  const [filters, setFilters] = useState<FilterOptions>({
+    course: null,
+    status: null,
+    priority: null,
+  });
 
   const handleAddAssignment = async (newAssignment: Assignment) => {
     if (user?.uid) {
@@ -26,19 +32,25 @@ const Assignments = () => {
     if (user?.uid) {
       const assignment = assignments.find(a => a.id === assignmentId);
       if (assignment) {
-        const updatedTasks = toggleAllTasks(assignment.tasks, assignment.status !== 'Completed');
         let updatedStatus = assignment.status;
+        let updatedProgress = assignment.progress;
+        let updatedTasks = assignment.tasks;
+
         if (assignment.status === 'Completed') {
-          updatedStatus = 'In Progress';
-        } else if (assignment.status === 'Not Started' && updatedTasks.some(task => task.completed)) {
-          updatedStatus = 'In Progress';
-        } else if (updatedTasks.every(task => !task.completed)) {
           updatedStatus = 'Not Started';
-        } else if (updatedTasks.every(task => task.completed)) {
+          updatedProgress = 0;
+          updatedTasks = updatedTasks.map(task => ({ ...task, completed: false }));
+        } else {
           updatedStatus = 'Completed';
+          updatedProgress = 100;
+          updatedTasks = updatedTasks.map(task => ({ ...task, completed: true }));
         }
-        const updatedProgress = updatedStatus === 'Completed' ? 100 : (updatedStatus === 'Not Started' ? 0 : Math.round((updatedTasks.filter(task => task.completed).length / updatedTasks.length) * 100));
-        await updateAssignment(user.uid, assignmentId, { tasks: updatedTasks, status: updatedStatus, progress: updatedProgress });
+
+        await updateAssignment(user.uid, assignmentId, { 
+          tasks: updatedTasks, 
+          status: updatedStatus, 
+          progress: updatedProgress 
+        });
       }
     }
   };
@@ -55,19 +67,27 @@ const Assignments = () => {
     }
   };
 
+  const handleFilterChange = useCallback((newFilters: FilterOptions) => {
+    setFilters(newFilters);
+  }, []);
+
   return (
-    <div className="flex flex-col px-11 py-6 h-[calc(100%-73px)]">
-      <Header 
-        courses={courses} 
-        onAddAssignment={handleAddAssignment}
-      />
-      <AssignmentList 
-        assignments={assignments} 
-        courses={courses}
-        onToggleAllTasks={handleToggleAllTasks}
-        onDeleteAssignment={handleDeleteAssignment}
-        onEditAssignment={handleEditAssignment}
-      />
+    <div className="flex flex-row justify-between px-11 py-6 h-[calc(100%-73px)]">
+      <div className='flex flex-col w-full pr-11'>
+        <Header 
+          courses={courses} 
+          onAddAssignment={handleAddAssignment}
+        />
+        <AssignmentList 
+          assignments={assignments} 
+          courses={courses}
+          onToggleAllTasks={handleToggleAllTasks}
+          onDeleteAssignment={handleDeleteAssignment}
+          onEditAssignment={handleEditAssignment}
+          filters={filters}
+        />
+      </div>
+      <AssignmentSidebar assignments={assignments} courses={courses} onFilterChange={handleFilterChange} />
     </div>
   );
 };

@@ -16,9 +16,6 @@ const Header = ({ courses, onAddAssignment }: HeaderProps) => {
       <div>
         <div className="flex items-center space-x-4">
           <Button variant="outline" size="icon">
-            <Filter className="h-4 w-4" />
-          </Button>
-          <Button variant="outline" size="icon">
             <SortDesc className="h-4 w-4" />
           </Button>
           <AddAssignmentDialog courses={courses} onAddAssignment={onAddAssignment} />

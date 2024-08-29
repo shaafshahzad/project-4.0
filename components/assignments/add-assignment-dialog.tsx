@@ -11,43 +11,10 @@ interface AddAssignmentDialogProps {
 }
 
 const AddAssignmentDialog = ({ courses, onAddAssignment }: AddAssignmentDialogProps) => {
-  const [newAssignment, setNewAssignment] = useState<Partial<Assignment>>({
-    course: '',
-    title: '',
-    dueDate: new Date(),
-    status: 'Not Started',
-    priority: 'Medium',
-    description: '',
-  });
-
-  const addAssignment = () => {
-    if (newAssignment.course && newAssignment.title && newAssignment.dueDate) {
-      const assignmentToAdd: Assignment = {
-        id: Date.now().toString(),
-        course: newAssignment.course,
-        title: newAssignment.title,
-        dueDate: newAssignment.dueDate,
-        status: newAssignment.status as string,
-        priority: newAssignment.priority as 'High' | 'Medium' | 'Low',
-        progress: 0,
-        description: newAssignment.description || '',
-        tasks: []
-      };
-
-      onAddAssignment(assignmentToAdd);
-      setNewAssignment({
-        course: '',
-        title: '',
-        dueDate: new Date(),
-        status: 'Not Started',
-        priority: 'Medium',
-        description: '',
-      });
-    }
-  };
+  const [open, setOpen] = useState(false);
 
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button>
           <PlusCircle className="h-4 w-4 mr-2" />
@@ -59,16 +26,10 @@ const AddAssignmentDialog = ({ courses, onAddAssignment }: AddAssignmentDialogPr
           <DialogTitle>Add New Assignment</DialogTitle>
         </DialogHeader>
         <AddAssignmentForm
-          newAssignment={newAssignment}
-          setNewAssignment={setNewAssignment}
           courses={courses}
+          onAddAssignment={onAddAssignment}
+          setOpen={setOpen}
         />
-        <DialogFooter>
-          <DialogClose asChild>
-            <Button variant="outline">Cancel</Button>
-          </DialogClose>
-          <Button onClick={addAssignment}>Add Assignment</Button>
-        </DialogFooter>
       </DialogContent>
     </Dialog>
   );

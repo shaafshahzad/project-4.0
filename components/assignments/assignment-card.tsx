@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -18,8 +18,10 @@ interface AssignmentCardProps {
 }
 
 const AssignmentCard = ({ assignment, courses, onToggleAllTasks, onDeleteAssignment, onEditAssignment }: AssignmentCardProps) => {
+  const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
+
   return (
-    <Dialog>
+    <>
       <Card className="cursor-pointer hover:shadow-md transition-shadow">
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
           <div className="flex flex-col">
@@ -42,11 +44,9 @@ const AssignmentCard = ({ assignment, courses, onToggleAllTasks, onDeleteAssignm
           <Progress value={assignment.progress} className="mb-2" />
           <div className="flex justify-between items-center">
             <div className="flex space-x-2">
-              <DialogTrigger asChild onClick={() => onEditAssignment(assignment)}>
-                <Button variant="outline" size="icon">
-                  <Edit2 className="h-4 w-4" />
-                </Button>
-              </DialogTrigger>
+              <Button variant="outline" size="icon" onClick={() => setIsEditDialogOpen(true)}>
+                <Edit2 className="h-4 w-4" />
+              </Button>
               <Button variant="outline" size="icon" onClick={() => onDeleteAssignment(assignment.id)}>
                 <Trash2 className="h-4 w-4" />
               </Button>
@@ -65,8 +65,14 @@ const AssignmentCard = ({ assignment, courses, onToggleAllTasks, onDeleteAssignm
           </div>
         </CardContent>
       </Card>
-      <EditAssignmentDialog assignment={assignment} courses={courses} onSaveChanges={onEditAssignment} />
-    </Dialog>
+      <EditAssignmentDialog 
+        assignment={assignment} 
+        courses={courses} 
+        onSaveChanges={onEditAssignment}
+        open={isEditDialogOpen}
+        setOpen={setIsEditDialogOpen}
+      />
+    </>
   );
 };
 
