@@ -31,7 +31,6 @@ export type Assignment = {
   progress: number;
   description: string;
   tasks: Task[];
-  notificationEnabled: boolean;
 }
 
 export interface FilterOptions {
