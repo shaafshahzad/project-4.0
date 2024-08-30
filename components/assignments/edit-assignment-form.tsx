@@ -275,7 +275,6 @@ const EditAssignmentForm = ({ assignment, courses, onSaveChanges, setOpen }: Edi
                     form.setValue('status', 'In Progress');
                   }
 
-                  // Recalculate progress
                   const completedTasks = allTasks.filter(t => t.completed).length;
                   const progress = Math.round((completedTasks / allTasks.length) * 100);
                 }}

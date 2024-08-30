@@ -1,6 +1,6 @@
 TODO:
 - [ ] Implement dynamic task scheduling
-- [ ] Finish landing page
+- [x] Finish landing page
 - [ ] Implement exam scheduler page
     - [ ] Directory of all exams, with dates and times
     - [ ] Ability to select all exams that a student wants to add

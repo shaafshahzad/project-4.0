@@ -77,7 +77,6 @@ export function findAvailableSlots(
     currentTime.setHours(workingHoursStart, 0, 0, 0);
   }
 
-  // Filter out slots that are too short (e.g., less than 30 minutes)
   const minimumSlotDuration = 30 * 60 * 1000; // 30 minutes in milliseconds
   availableSlots = availableSlots.filter(
     (slot) => slot.end.getTime() - slot.start.getTime() >= minimumSlotDuration

@@ -60,7 +60,6 @@ const EditCourseInputs = ({ course, setCourse }: EditCourseInputsProps) => {
     });
   };
 
-  // Sort the weekly topics by week number
   const sortedTopics = Object.entries(course.topics).sort(
     ([weekA], [weekB]) => {
       const weekNumberA = parseInt(weekA.split(" ")[1]);
