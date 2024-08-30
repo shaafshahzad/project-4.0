@@ -31,6 +31,17 @@ const NavbarLanding = () => {
                             <Button variant="outline" onClick={handleSignIn} className="text-xs text-foreground/90 hover:text-foreground">
                                 {item}
                             </Button>
+                        ) : item === "Log In" ? (
+                            <Link
+                                href="#"
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    handleSignIn();
+                                }}
+                                className="text-xs hover:underline text-foreground/90 hover:text-foreground"
+                            >
+                                {item}
+                            </Link>
                         ) : (
                             <Link
                                 href={`#${item.toLowerCase()}`}

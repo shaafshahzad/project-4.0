@@ -10,3 +10,5 @@ TODO:
     - [x] Track assignment due dates
 - [ ] Implement smart task prioritization
     - [ ] Task priority based on due date, importance, and time left
+- [ ] Update bottom left widget
+- [ ] Calendar styling
