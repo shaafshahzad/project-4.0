@@ -11,7 +11,7 @@ import { AuroraBackground } from "@/components/ui/aurora-background";
 const Landing = () => {
   return (
     <>
-      <AuroraBackground children={undefined} />
+      <AuroraBackground />
       <div className="relative z-10 flex items-center flex-col w-full min-h-screen">
         <NavbarLanding />
         <div className="w-full px-4 sm:px-8 md:px-16 lg:px-32 xl:px-64 h-full flex flex-col justify-between">
