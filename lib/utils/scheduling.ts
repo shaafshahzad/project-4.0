@@ -77,6 +77,12 @@ export function findAvailableSlots(
     currentTime.setHours(workingHoursStart, 0, 0, 0);
   }
 
+  // Filter out slots that are too short (e.g., less than 30 minutes)
+  const minimumSlotDuration = 30 * 60 * 1000; // 30 minutes in milliseconds
+  availableSlots = availableSlots.filter(
+    (slot) => slot.end.getTime() - slot.start.getTime() >= minimumSlotDuration
+  );
+
   return availableSlots;
 }
 
@@ -94,7 +100,6 @@ export function allocateTaskTime(
     const slotDuration = (slot.end.getTime() - slot.start.getTime()) / 60000; // Convert to minutes
     const allocatedDuration = Math.min(remainingDuration, slotDuration);
 
-    // Check if the slot doesn't overlap with existing events
     if (allocatedDuration > 0) {
       allocatedSlots.push({
         start: new Date(slot.start),
@@ -102,6 +107,8 @@ export function allocateTaskTime(
       });
       remainingDuration -= allocatedDuration;
     }
+
+    if (remainingDuration <= 0) break;
   }
 
   return allocatedSlots;

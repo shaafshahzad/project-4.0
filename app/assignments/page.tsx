@@ -95,8 +95,8 @@ const Assignments = () => {
   }, [assignments, sortBy]);
 
   return (
-    <div className="flex flex-row justify-between px-11 py-6 h-[calc(100%-73px)]">
-      <div className='flex flex-col w-full pr-11'>
+    <div className="flex flex-row justify-between px-11 h-[calc(100%-73px)]">
+      <div className='flex flex-col w-full pr-11 py-6'>
         <Header 
           courses={courses} 
           onAddAssignment={handleAddAssignment}

@@ -36,7 +36,7 @@ const AssignmentSidebar = ({ assignments, courses, onFilterChange }: { assignmen
     };
 
     return (
-        <div className="w-96 border-l pl-11 pr-2 overflow-y-auto">
+        <div className="w-96 border-l pl-11 py-6 pr-2 overflow-y-auto">
             <h2 className="text-lg font-semibold mb-4 text-center">Quick Filters</h2>
             <div className="space-y-2">
                 <DropdownMenu>

@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@ant-design/icons": "^5.4.0",
     "@fullcalendar/core": "^6.1.10",
     "@fullcalendar/daygrid": "^6.1.10",
     "@fullcalendar/google-calendar": "^6.1.10",
@@ -34,7 +35,7 @@
     "axios": "^1.6.5",
     "busboy": "^1.6.0",
     "class-variance-authority": "^0.7.0",
-    "clsx": "^2.1.0",
+    "clsx": "^2.1.1",
     "date-fns": "^3.3.1",
     "embla-carousel-react": "^8.0.0",
     "firebase": "^10.7.1",
@@ -56,7 +57,7 @@
     "react-dom": "^18",
     "react-hook-form": "^7.50.1",
     "stream": "^0.0.2",
-    "tailwind-merge": "^2.2.0",
+    "tailwind-merge": "^2.5.2",
     "tailwindcss-animate": "^1.0.7",
     "util": "^0.12.5",
     "uuid": "^9.0.1",
