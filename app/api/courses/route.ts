@@ -58,87 +58,43 @@ export async function POST(req: NextRequest) {
         {
           role: "system",
           content: `
-                    Your assignment involves extracting and organizing comprehensive course information into a structured JSON format. This process requires you to identify three critical elements from the provided text:
+                    Your assignment involves extracting and organizing comprehensive course information into a structured JSON format. This process requires you to identify two critical elements from the provided text:
 
                     1. courseName: The name of the course. Should be formatted as 'course code: course title' (e.g., 'CPS109: Introduction to Computer Programming').
                     2. courseGrading: The course's grading scheme, detailing each component (e.g., assignments, exams) along with their respective weights. The weights should just be a number without the percentage sign. If there is a component that contains multiple subcomponents, the weights should be distributed evenly. For example, if a course has 5 labs with a total worth of 10%, each lab should be worth 2%. It should be formatted as Lab #: Lab Weighting (e.g., Lab 1: 2%).
-                    3. topics: The specific content covered in the course, formatted as "topic number: content".
-                    In cases where topics are not clearly discernible or absent from the text, the output should explicitly state "No topics found" under the topics key.
-                    Topics should be numbered in the order in which they appear in like so:
-                    {
-                        Topic 1: Topic content
-                        Topic 2: Topic content
-                        Topic 3: Topic content
-                        // ... continue for each topic if available
-                    }
 
-                    Your output should be a JSON object with these keys, accurately capturing the details of the course, its grading structure, and the weekly curriculum.
+                    Your output should be a JSON object with these keys, accurately capturing the details of the course and its grading structure.
 
-                    For example, if the input text provides the course name, its grading components, and a list of topics, your output should look like this (with hypothetical values for illustration):                
+                    For example, if the input text provides the course name and its grading components, your output should look like this (with hypothetical values for illustration):                
                     For a course with three assignments worth a total of 30%, a midterm worth 30%, and a final exam worth 40%, the JSON should look like this:
 
                     {
                         "courseName": "CPS109: Introduction to Computer Programming",
                         "courseGrading": {
-                          "Midterm Exam" {
-                            "weight": "30%"
+                          "Midterm Exam": {
+                            "weight": 30,
                             "mark": ""
                           },
-                          "Final Exam" {
-                              "weight": "40%"
+                          "Final Exam": {
+                              "weight": 40,
                               "mark": ""
                           },
-                          "Assignment 1" {
-                              "weight": "10%"
+                          "Assignment 1": {
+                              "weight": 10,
                               "mark": ""
                           },
-                          "Assignment 2" {
-                              "weight": "10%"
+                          "Assignment 2": {
+                              "weight": 10,
                               "mark": ""
                           },
-                          "Assignment 3" {
-                              "weight": "10%"
+                          "Assignment 3": {
+                              "weight": 10,
                               "mark": ""
                           } 
-                        },
-                        "topics": {
-                          "Topic 1": "Basics of Programming, we do this, we do that, etc.",
-                          "Topic 2": "Control Structures",
-                          "Topic 3": "Data Structures",
-                          // ... continue for each topic if available
                         }
                     }
                      
-                    However, if topics cannot be properly identified, the JSON should reflect that as follows:
-
-                    {
-                        "courseName": "CPS109: Introduction to Computer Programming",
-                        "courseGrading": {
-                            "Midterm Exam" {
-                                "weight": "30%"
-                                "mark": ""
-                            },
-                            "Final Exam" {
-                                "weight": "40%"
-                                "mark": ""
-                            },
-                            "Assignment 1" {
-                                "weight": "10%"
-                                "mark": ""
-                            },
-                            "Assignment 2" {
-                                "weight": "10%"
-                                "mark": ""
-                            },
-                            "Assignment 3" {
-                                "weight": "10%"
-                                "mark": ""
-                            } 
-                        },
-                        "topics": "No topics found"
-                    }
-                    
-                    Note: Pay careful attention to accurately parsing and formatting the course name, grading scheme, and topics (if available).
+                    Note: Pay careful attention to accurately parsing and formatting the course name and grading scheme.
                     `,
         },
         { role: "user", content: parsedText },

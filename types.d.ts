@@ -12,7 +12,6 @@ export interface Courses {
       weight: string;
     };
   };
-  topics: { [week: string]: string };
 }
 
 export type Task = {
