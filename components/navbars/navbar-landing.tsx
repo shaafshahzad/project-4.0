@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import { useRouter } from "next/navigation";
 import { signIn } from "@/lib/sign-in-or-create";
 import { Button } from "../ui/button";
+import ToggleModes from "./toggle-modes";
 
 const NavbarLanding = () => {
     const navbarItems = ["Features", "FAQ", "Contact", "Log In", "Sign Up"];
@@ -52,6 +53,7 @@ const NavbarLanding = () => {
                         )}
                     </React.Fragment>
                 ))}
+                <ToggleModes />
             </div>
         </div>
     );
