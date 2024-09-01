@@ -32,6 +32,7 @@ import {
 } from "@/components/ui/select";
 import { Assignment, Courses } from '@/types';
 import { Checkbox } from "@/components/ui/checkbox";
+import { toast } from "sonner";
 
 const FormSchema = z.object({
   course: z.string({
@@ -92,6 +93,9 @@ const EditAssignmentForm = ({ assignment, courses, onSaveChanges, setOpen }: Edi
     };
     onSaveChanges(updatedAssignment);
     setOpen(false);
+    toast.success("Assignment updated", {
+      description: `${values.title} has been updated`,
+    });
   }
 
   const calculateProgress = (tasks: { completed: boolean }[]) => {

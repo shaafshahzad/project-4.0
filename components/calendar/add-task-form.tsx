@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -23,6 +23,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { AccessToken } from "@/types";
+import { toast } from "sonner";
 
 const FormSchema = z.object({
   taskName: z.string({
@@ -40,10 +41,10 @@ const AddTaskForm = ({ accessToken }: AccessToken) => {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   async function onSubmit(values: z.infer<typeof FormSchema>) {
-    console.log(accessToken);
-    console.log(values);
+    setIsSubmitting(true);
     try {
       const response = await fetch("/api/addTask", {
         method: "POST",
@@ -54,12 +55,22 @@ const AddTaskForm = ({ accessToken }: AccessToken) => {
         },
       });
       if (response.ok) {
-        console.log("Task added");
+        toast.success("Task added", {
+          description: `${values.taskName} has been added`,
+        });
+        window.dispatchEvent(new Event('taskAdded'));
       } else {
-        console.error("Failed to add task");
+        toast.error("Failed to add task", {
+          description: "Please try again later",
+        });
       }
     } catch (error) {
       console.error("Error:", error);
+      toast.error("Error adding task", {
+        description: "An unexpected error occurred",
+      });
+    } finally {
+      setIsSubmitting(false);
     }
   }
 
@@ -131,8 +142,8 @@ const AddTaskForm = ({ accessToken }: AccessToken) => {
               </FormItem>
             )}
           />
-          <Button type="submit" className="w-full">
-            Submit
+          <Button type="submit" className="w-full" disabled={isSubmitting}>
+            {isSubmitting ? "Adding..." : "Submit"}
           </Button>
         </form>
       </Form>

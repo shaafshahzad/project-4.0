@@ -4,6 +4,7 @@ import "./globals.css";
 import { cn } from "@/lib/utils";
 import { ThemeProvider } from "@/components/theme-provider";
 import NavbarMain from "@/components/navbars/navbar-main";
+import { Toaster } from "@/components/ui/sonner";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
 
@@ -28,6 +29,7 @@ export default function RootLayout({
         >
           <NavbarMain />
           {children}
+          <Toaster richColors />
         </ThemeProvider>
       </body>
     </html>

@@ -16,6 +16,7 @@ import { useRouter } from "next/navigation";
 import { db } from "@/lib/firebase";
 import { doc, updateDoc } from "firebase/firestore";
 import { Card, CardContent } from "@/components/ui/card";
+import { toast } from "sonner";
 
 interface Grading {
   id: number;
@@ -67,6 +68,9 @@ const AddCourse = ({ pathname }: Props) => {
             {}
           ),
         },
+      });
+      toast.success("Course added", {
+        description: `${courseData.name} has been added`,
       });
     } catch (error) {
       console.error("Error adding course: ", error);

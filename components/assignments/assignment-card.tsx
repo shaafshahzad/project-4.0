@@ -8,6 +8,18 @@ import { Edit2, Trash2, Bell, CheckCircle2 } from 'lucide-react';
 import { format, isValid } from "date-fns";
 import EditAssignmentDialog from './edit-assignment-dialog';
 import { Assignment, Courses } from '@/types';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+import { toast } from "sonner";
 
 interface AssignmentCardProps {
   assignment: Assignment;
@@ -48,9 +60,32 @@ const AssignmentCard = ({ assignment, courses, courseColor, onToggleAllTasks, on
               <Button variant="outline" size="icon" onClick={() => setIsEditDialogOpen(true)}>
                 <Edit2 className="h-4 w-4" />
               </Button>
-              <Button variant="destructive" size="icon" onClick={() => onDeleteAssignment(assignment.id)}>
-                <Trash2 className="h-4 w-4" />
-              </Button>
+              <AlertDialog>
+                <AlertDialogTrigger asChild>
+                  <Button variant="destructive" size="icon">
+                    <Trash2 className="h-4 w-4" />
+                  </Button>
+                </AlertDialogTrigger>
+                <AlertDialogContent>
+                  <AlertDialogHeader>
+                    <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+                    <AlertDialogDescription>
+                      This action cannot be undone. This will permanently delete the assignment "{assignment.title}".
+                    </AlertDialogDescription>
+                  </AlertDialogHeader>
+                  <AlertDialogFooter>
+                    <AlertDialogCancel>Cancel</AlertDialogCancel>
+                    <AlertDialogAction onClick={() => {
+                      onDeleteAssignment(assignment.id);
+                      toast.success("Assignment deleted", {
+                        description: `${assignment.title} has been deleted`,
+                      });
+                    }}>
+                      Delete
+                    </AlertDialogAction>
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialog>
             </div>
             <Button 
               variant={assignment.status === 'Completed' ? "secondary" : "outline"} 

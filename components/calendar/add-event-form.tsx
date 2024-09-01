@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -25,6 +25,7 @@ import {
 } from "@/components/ui/popover";
 import { TimePickerInput } from "@/lib/utils/time-picker-input";
 import { AccessToken } from "@/types";
+import { toast } from "sonner";
 
 const FormSchema = z.object({
   eventName: z.string({
@@ -44,14 +45,14 @@ const AddEventForm = ({ accessToken }: AccessToken) => {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const minuteRef = React.useRef<HTMLInputElement>(null);
   const hourRef = React.useRef<HTMLInputElement>(null);
   const secondRef = React.useRef<HTMLInputElement>(null);
 
   async function onSubmit(values: z.infer<typeof FormSchema>) {
-    console.log(accessToken);
-    console.log(values);
+    setIsSubmitting(true);
     try {
       const response = await fetch("/api/addEvent", {
         method: "POST",
@@ -63,12 +64,23 @@ const AddEventForm = ({ accessToken }: AccessToken) => {
       });
 
       if (response.ok) {
-        console.log("Event added");
+        toast.success("Event added", {
+          description: `${values.eventName} has been added`,
+        });
+        window.dispatchEvent(new Event('eventAdded'));
+        form.reset(); // Reset the form after successful submission
       } else {
-        console.error("Failed to add event");
+        toast.error("Failed to add event", {
+          description: "Please try again later",
+        });
       }
     } catch (error) {
       console.error("Error:", error);
+      toast.error("Error adding event", {
+        description: "An unexpected error occurred",
+      });
+    } finally {
+      setIsSubmitting(false);
     }
   }
 
@@ -229,8 +241,8 @@ const AddEventForm = ({ accessToken }: AccessToken) => {
               </FormItem>
             )}
           />
-          <Button type="submit" className="w-full">
-            Submit
+          <Button type="submit" className="w-full" disabled={isSubmitting}>
+            {isSubmitting ? "Adding..." : "Submit"}
           </Button>
         </form>
       </Form>

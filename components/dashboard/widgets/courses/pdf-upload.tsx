@@ -15,6 +15,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { toast } from "sonner";
 
 const PdfUpload = () => {
   const [upload, setUpload] = useState<File | null>(null);
@@ -46,6 +47,9 @@ const PdfUpload = () => {
 
           const courseRef = doc(db, "courses", user.uid);
           await setDoc(courseRef, courseData, { merge: true });
+          toast.success("Course uploaded", {
+            description: `${courseInfo.courseName} has been uploaded`,
+          });
         } else {
           console.error("Error processing PDF: ", result);
         }

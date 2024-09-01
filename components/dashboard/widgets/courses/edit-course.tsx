@@ -13,6 +13,7 @@ import { doc, updateDoc, deleteField } from "firebase/firestore";
 import { SquarePen } from "lucide-react";
 import React, { useState } from "react";
 import EditCourseInputs from "./edit-course-inputs";
+import { toast } from "sonner";
 
 interface Grading {
   [assignment: string]: {
@@ -80,6 +81,9 @@ const EditCourse = ({ course, userId }: EditCourseProps) => {
           },
         });
       }
+      toast.success("Course updated", {
+        description: `${course.name} has been updated`,
+      });
     } catch (error) {
       console.error("Error updating course: ", error);
     }

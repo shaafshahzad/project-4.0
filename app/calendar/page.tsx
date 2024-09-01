@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState, useEffect } from "react";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
@@ -14,12 +14,28 @@ const Calendar = () => {
   const user = useAuth(router);
   const userEmail = user?.email || "";
   const accessToken = user?.googleAccessToken || "";
+  const [refreshKey, setRefreshKey] = useState(0);
+
+  useEffect(() => {
+    const handleCalendarUpdate = () => {
+      setRefreshKey((prevKey) => prevKey + 1);
+    };
+
+    window.addEventListener('taskAdded', handleCalendarUpdate);
+    window.addEventListener('eventAdded', handleCalendarUpdate);
+
+    return () => {
+      window.removeEventListener('taskAdded', handleCalendarUpdate);
+      window.removeEventListener('eventAdded', handleCalendarUpdate);
+    };
+  }, []);
 
   return (
     <div className="w-full h-full flex">
       <Sidebar accessToken={accessToken} />
       <div className="w-full p-14">
         <FullCalendar
+          key={refreshKey}
           plugins={[dayGridPlugin, timeGridPlugin, googleCalendarPlugin]}
           initialView="timeGridWeek"
           headerToolbar={{

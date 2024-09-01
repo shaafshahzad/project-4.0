@@ -31,6 +31,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Assignment, Courses } from '@/types';
+import { toast } from "sonner";
 
 const FormSchema = z.object({
   course: z.string({
@@ -73,6 +74,9 @@ const AddAssignmentForm = ({ courses, onAddAssignment, setOpen }: AddAssignmentF
     };
     onAddAssignment(newAssignment);
     form.reset();
+    toast.success("Assignment added", {
+      description: `${values.title} has been added`,
+    });
     setOpen(false);
   }
 

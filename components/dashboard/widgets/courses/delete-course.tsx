@@ -13,6 +13,7 @@ import { db } from "@/lib/firebase";
 import { doc, updateDoc, deleteField } from "firebase/firestore";
 import { TrashIcon } from "lucide-react";
 import React from "react";
+import { toast } from "sonner"
 
 interface Grading {
   [assignment: string]: {
@@ -37,6 +38,9 @@ const DeleteCourse = ({ course, userId }: DeleteCourseProps) => {
     const userDocRef = doc(db, "courses", userId);
     await updateDoc(userDocRef, {
       [course.name]: deleteField(),
+    });
+    toast.success("Course deleted", {
+      description: `${course.name} has been deleted from your courses`,
     });
   };
 
