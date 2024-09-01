@@ -70,7 +70,7 @@ const AssignmentCard = ({ assignment, courses, courseColor, onToggleAllTasks, on
                   <AlertDialogHeader>
                     <AlertDialogTitle>Are you sure?</AlertDialogTitle>
                     <AlertDialogDescription>
-                      This action cannot be undone. This will permanently delete the assignment "{assignment.title}".
+                      This action cannot be undone. This will permanently delete the assignment &ldquo;{assignment.title}&rdquo;.
                     </AlertDialogDescription>
                   </AlertDialogHeader>
                   <AlertDialogFooter>
