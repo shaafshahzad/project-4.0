@@ -12,7 +12,7 @@ const Dashboard = () => {
 	const isScreenBreakpoint = useScreenSize();
 
 	return (
-		<div className="flex flex-col px-11 py-6 h-[calc(100%-73px)]">
+		<div className="flex flex-col px-11 py-6 h-[calc(100vh-73px)] overflow-hidden">
 			<div className="flex justify-between pb-4">
 				<h1 className="text-3xl font-semibold">Dashboard</h1>
 				{isScreenBreakpoint ? <Quote /> : null}
@@ -20,8 +20,8 @@ const Dashboard = () => {
 			<div
 				className={`gap-4 ${
 					isScreenBreakpoint
-						? "w-full h-full grid grid-cols-5 grid-rows-2"
-						: "flex flex-col"
+						? "w-full h-full grid grid-cols-5 grid-rows-2 overflow-hidden"
+						: "flex flex-col overflow-y-auto"
 				}`}
 			>
 				<Courses />

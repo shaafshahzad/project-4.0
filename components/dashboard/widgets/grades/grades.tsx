@@ -11,11 +11,11 @@ const Grades = () => {
 	const courses = useCourses(user);
 
 	return (
-		<Card className="col-span-2 col-start-4 row-start-2 flex flex-col">
+		<Card className="col-span-2 col-start-4 row-start-2 flex flex-col overflow-hidden">
 			<CardHeader className="">
 				<CardTitle>Grades</CardTitle>
 			</CardHeader>
-			<CardContent className="h-full overflow-y-auto">
+			<CardContent className="flex-1 overflow-y-auto">
 				<GradesList courses={courses} />
 			</CardContent>
 		</Card>

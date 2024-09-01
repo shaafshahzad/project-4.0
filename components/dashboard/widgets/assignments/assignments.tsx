@@ -19,11 +19,11 @@ const Content = () => {
   });
 
   return (
-    <Card className="flex flex-col col-span-3 row-start-2">
+    <Card className="flex flex-col col-span-3 row-start-2 overflow-hidden">
       <CardHeader>
         <CardTitle>Upcoming Tasks</CardTitle>
       </CardHeader>
-      <CardContent className="h-full w-full overflow-y-auto">
+      <CardContent className="flex-1 overflow-y-auto">
         {sortedAssignments.length > 0 ? (
           <div className="grid grid-cols-2 gap-4">
             {sortedAssignments.map((assignment) => (

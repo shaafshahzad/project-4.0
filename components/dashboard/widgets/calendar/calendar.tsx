@@ -17,11 +17,11 @@ const Calendar = () => {
   const userEmail = user?.email || "";
 
   return (
-    <Card className="flex flex-col col-span-3 col-start-3">
+    <Card className="flex flex-col col-span-3 col-start-3 overflow-hidden">
       <CardHeader>
         <CardTitle>{title}</CardTitle>
       </CardHeader>
-      <CardContent className="h-full">
+      <CardContent className="flex-1 overflow-y-auto">
         <FullCalendar
           plugins={[dayGridPlugin, timeGridPlugin, googleCalendarPlugin]}
           initialView="timeGridWeek"

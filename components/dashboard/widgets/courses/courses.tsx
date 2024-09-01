@@ -13,7 +13,7 @@ import AddCourse from "./add-course";
 
 const Courses = () => {
   return (
-    <Card className="col-span-2 flex flex-col">
+    <Card className="col-span-2 flex flex-col overflow-hidden">
       <CardHeader className="flex flex-row justify-between">
         <div className="w-[85%]">
           <CardTitle>Your courses</CardTitle>
@@ -23,7 +23,7 @@ const Courses = () => {
         </div>
         <AddCourse pathname={"/dashboard"} />
       </CardHeader>
-      <CardContent className="h-full overflow-y-auto">
+      <CardContent className="flex-1 overflow-y-auto">
         <CourseList />
       </CardContent>
       <CardFooter className="pt-2">
