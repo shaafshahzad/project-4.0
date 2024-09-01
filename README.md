@@ -1,16 +1,13 @@
 # Project 4.0
----
 
 ![Project 4.0 Logo](/public/logo.png)
 
 Project 4.0 is a centralized academic hub designed to streamline your study routine and help you stay on top of your courses and deadlines with ease.
 
 ## Introduction
----
 Project 4.0 is a comprehensive web application that blends effortlessly into your study routine, streamlining your tasks so you can focus on what really matters - getting that well-deserved A. It provides a centralized platform for managing courses, assignments, grades, and schedules, making academic life more organized and efficient.
 
 ## Features
----
 1. **Smart Course Upload**: Upload your course outlines, and let AI extract all the key details you need.
 
 2. **Dynamic Calendar**: View your entire schedule and easily add tasks or events, keeping your semester on track.
@@ -22,7 +19,6 @@ Project 4.0 is a comprehensive web application that blends effortlessly into you
 5. **Real-time Updates**: All your data is synced in real-time across devices, thanks to Firebase integration.
 
 ## Built with
----
 - Next.js
 - TypeScript
 - Tailwind CSS
@@ -31,7 +27,6 @@ Project 4.0 is a comprehensive web application that blends effortlessly into you
 - OpenAI API
 
 ## Screenshots
----
 ![Landing Page](/public/landing.png)
 *Landing page with a brief introduction to the project*
 
@@ -48,7 +43,6 @@ Project 4.0 is a comprehensive web application that blends effortlessly into you
 *Calendar view for managing schedules and deadlines*
 
 ## Getting Started
----
 To get a local copy up and running, follow these simple steps:
 
 1. Clone the repository:
@@ -86,7 +80,6 @@ To get a local copy up and running, follow these simple steps:
 6. Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 ## Contributing
----
 Any contributions you make are **greatly appreciated**.
 
 1. Fork the Project
@@ -96,5 +89,4 @@ Any contributions you make are **greatly appreciated**.
 5. Open a Pull Request
 
 ## Contact
----
 Shaaf Shahzad - [shaaf.m.shahzad@gmail.com](mailto:shaaf.m.shahzad@gmail.com)
