@@ -26,7 +26,9 @@ const Sidebar = ({ accessToken }: AccessToken) => {
 	return (
 		<>
 			{isLargeScreen ? (
-				<SidebarContent accessToken={accessToken} />
+				<div className="h-full overflow-hidden p-6 w-96 border-r">
+					<SidebarContent accessToken={accessToken} />
+				</div>
 			) : (
 				<Sheet>
 					<SheetTrigger asChild>
@@ -43,7 +45,7 @@ const Sidebar = ({ accessToken }: AccessToken) => {
 							/>
 						</Button>
 					</SheetTrigger>
-					<SheetContent side={"left"} className="h-full">
+					<SheetContent side={"left"} className="w-80 h-full overflow-hidden">
 						<SidebarContent accessToken={accessToken} />
 					</SheetContent>
 				</Sheet>

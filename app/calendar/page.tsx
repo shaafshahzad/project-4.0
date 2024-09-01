@@ -31,29 +31,31 @@ const Calendar = () => {
   }, []);
 
   return (
-    <div className="w-full h-full flex">
+    <div className="w-full h-[calc(100vh-73px)] flex overflow-hidden">
       <Sidebar accessToken={accessToken} />
-      <div className="w-full p-14">
-        <FullCalendar
-          key={refreshKey}
-          plugins={[dayGridPlugin, timeGridPlugin, googleCalendarPlugin]}
-          initialView="timeGridWeek"
-          headerToolbar={{
-            left: "prev,next",
-            center: "title",
-            right: "dayGridMonth,timeGridWeek,timeGridDay",
-          }}
-          googleCalendarApiKey={process.env.NEXT_PUBLIC_GOOGLE_CALENDAR_API_KEY}
-          eventSources={[
-            {
-              googleCalendarId: `${userEmail}`,
-            },
-          ]}
-          nowIndicator
-          now={new Date().toISOString()}
-          allDaySlot={false}
-          height="100%"
-        />
+      <div className="w-full p-14 overflow-hidden flex flex-col">
+        <div className="flex-1 overflow-auto">
+          <FullCalendar
+            key={refreshKey}
+            plugins={[dayGridPlugin, timeGridPlugin, googleCalendarPlugin]}
+            initialView="timeGridWeek"
+            headerToolbar={{
+              left: "prev,next",
+              center: "title",
+              right: "dayGridMonth,timeGridWeek,timeGridDay",
+            }}
+            googleCalendarApiKey={process.env.NEXT_PUBLIC_GOOGLE_CALENDAR_API_KEY}
+            eventSources={[
+              {
+                googleCalendarId: `${userEmail}`,
+              },
+            ]}
+            nowIndicator
+            now={new Date().toISOString()}
+            allDaySlot={false}
+            height="100%"
+          />
+        </div>
       </div>
     </div>
   );
