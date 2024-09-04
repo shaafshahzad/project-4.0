@@ -13,7 +13,6 @@ interface Grading {
 interface Course {
   name: string;
   grading: Grading;
-  topics: { [week: string]: string };
 }
 
 interface EditCourseInputsProps {
@@ -50,24 +49,6 @@ const EditCourseInputs = ({ course, setCourse }: EditCourseInputsProps) => {
     setCourse({ ...course, grading: newGrading });
   };
 
-  const handletopicsChange = (week: string, value: string) => {
-    setCourse({
-      ...course,
-      topics: {
-        ...course.topics,
-        [week]: value,
-      },
-    });
-  };
-
-  const sortedTopics = Object.entries(course.topics).sort(
-    ([weekA], [weekB]) => {
-      const weekNumberA = parseInt(weekA.split(" ")[1]);
-      const weekNumberB = parseInt(weekB.split(" ")[1]);
-      return weekNumberA - weekNumberB;
-    }
-  );
-
   return (
     <AlertDialogDescription className="space-y-4 overflow-auto h-96">
       <div>
@@ -97,20 +78,6 @@ const EditCourseInputs = ({ course, setCourse }: EditCourseInputsProps) => {
               </div>
             )
           )}
-        </div>
-      </div>
-      <div>
-        <Label>Weekly Topics</Label>
-        <div className="space-y-2">
-          {sortedTopics.map(([week, value]) => (
-            <div key={week} className="gap-2">
-              <Label>{week}</Label>
-              <Input
-                value={value}
-                onChange={(e) => handletopicsChange(week, e.target.value)}
-              />
-            </div>
-          ))}
         </div>
       </div>
     </AlertDialogDescription>
