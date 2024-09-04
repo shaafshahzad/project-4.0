@@ -103,7 +103,9 @@ const AssignmentSidebar = ({ assignments, courses, onFilterChange }: { assignmen
                         </div>
                     ))
                 ) : (
-                    <p className="text-sm">No tasks due today</p>
+                    <div className="flex justify-center items-center h-full">
+                        <p className="text-sm">No tasks due today</p>
+                    </div>
                 )}
             </div>
         </div>
