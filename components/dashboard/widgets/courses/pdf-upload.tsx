@@ -41,7 +41,6 @@ const PdfUpload = () => {
           const courseData = {
             [courseInfo.courseName]: {
               grading: courseInfo.courseGrading,
-              topics: courseInfo.topics,
             },
           };
 
