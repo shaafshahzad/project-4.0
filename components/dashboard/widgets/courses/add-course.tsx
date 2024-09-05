@@ -24,16 +24,9 @@ interface Grading {
   weight: string;
 }
 
-interface WeeklyTopic {
-  id: number;
-  week: string;
-  topic: string;
-}
-
 interface CourseData {
   name: string;
   grading: Grading[];
-  topics: WeeklyTopic[];
 }
 
 interface Props {
@@ -46,25 +39,17 @@ const AddCourse = ({ pathname }: Props) => {
   const [courseData, setCourseData] = React.useState<CourseData>({
     name: "",
     grading: [],
-    topics: [],
   });
 
   const addCourse = async () => {
     if (!user) return;
 
     try {
-      const filteredtopics = courseData.topics.filter(
-        (topic) => topic.week && topic.topic
-      );
       const userDocRef = doc(db, "courses", user.uid);
       await updateDoc(userDocRef, {
         [courseData.name]: {
           grading: courseData.grading.reduce(
             (acc, { category, weight }) => ({ ...acc, [category]: { weight } }),
-            {}
-          ),
-          topics: filteredtopics.reduce(
-            (acc, { week, topic }) => ({ ...acc, [week]: topic }),
             {}
           ),
         },

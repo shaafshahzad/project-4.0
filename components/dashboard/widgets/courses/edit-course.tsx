@@ -25,7 +25,6 @@ interface Grading {
 interface Course {
   name: string;
   grading: Grading;
-  topics: { [week: string]: string };
 }
 
 interface EditCourseProps {
@@ -48,7 +47,6 @@ const EditCourse = ({ course, userId }: EditCourseProps) => {
           [oldCourseName]: deleteField(),
           [newCourseName]: {
             grading: updatedCourse.grading,
-            topics: updatedCourse.topics,
           },
         });
       } else {
@@ -76,7 +74,6 @@ const EditCourse = ({ course, userId }: EditCourseProps) => {
           [oldCourseName]: deleteField(),
           [newCourseName]: {
             grading: updatedCourse.grading,
-            topics: updatedCourse.topics,
             ...gradingUpdates,
           },
         });
